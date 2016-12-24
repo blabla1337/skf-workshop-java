@@ -1,0 +1,109 @@
+#page{
+  width: 100%;
+  margin: 0 auto;
+}
+
+.accountEditBtn{ 
+	background-image: url('../resources/images/logout-64.png'); 
+	position:absolute; 
+	top:0; 
+	right:0;
+	}
+	
+.button{
+		font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;
+	font-size: 20px;
+	font-style: bold;
+	font-variant: bold;
+	font-weight: 500;
+	line-height: 26.4px;
+	
+	
+}
+
+.current_user{
+		font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;
+	font-size: 20px;
+	font-style: bold;
+	font-variant: bold;
+	font-weight: 500;
+	line-height: 26.4px;
+	
+	
+}
+
+.user_login{
+	font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;
+	font-size: 40px;
+	font-style: bold;
+	font-variant: bold;
+	font-weight: 500;
+	line-height: 26.4px;
+
+}
+	
+.centered {
+    margin: auto;
+    width: 50%;
+    border: 0px solid black;
+    padding: 10px;
+}
+
+body {
+text-align:center;
+background: rgb(238,238,238); /* Old browsers */
+background: -moz-linear-gradient(top,  rgba(238,238,238,1) 0%, rgba(89,89,89,1) 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(238,238,238,1)), color-stop(100%,rgba(89,89,89,1))); /* Chrome,Safari4+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', endColorstr='#595959',GradientType=0 ); /* IE6-9 */
+}
+
+.left_side {
+    display: block;
+    margin: 0 left;
+}
+
+#header{  
+	font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;
+	font-size: 20px;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: 500;
+	line-height: 16.4px;
+    background-color:rgb(241,207,126);
+    float: right;
+    height:255px;
+    margin-bottom:16px;
+    overflow: hidden;
+    position: relative;
+    left: 0px;
+    top: 0px;
+    z-index: -1;
+    border: 0px solid #000;
+    width: 100%;
+}
+
+#content{
+	font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif;
+	font-size: 14px;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: 500;
+	line-height: 6.4px;
+  width: 100%;
+  height:800px;
+  margin-right:16px;
+  margin-bottom:16px;
+  border: 0px solid #000;
+}
+
+#footer{
+    float: right;
+    height:150px;
+    overflow: hidden;
+    position: relative;
+    left: 0px;
+    top: 0px;
+    z-index: -1;
+    border: 0px solid #000;
+    width: 100%;
+}

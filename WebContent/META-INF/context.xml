@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Context path="/JServletSide" docBase="/JServletSide"
+   crossContext="true" reloadable="true" debug="1">
+
+
+<Resource name="jdbc/myJdbc" auth="Container" type="javax.sql.DataSource"
+           maxActive="100" maxIdle="30" maxWait="10000"
+           username="user" password="javadude" 
+           driverClassName="com.mysql.cj.jdbc.Driver"
+           url="jdbc:mysql://localhost:3306/aggregate_control"/>
+
+<Resource name="jdbc/auditlogs_Jdbc" auth="Container" type="javax.sql.DataSource"
+           maxActive="100" maxIdle="30" maxWait="10000"
+           username="user" password="javadude" 
+           driverClassName="com.mysql.cj.jdbc.Driver"
+           url="jdbc:mysql://localhost:3306/auditlogs"/>
+           
+<Resource name="jdbc/login_Jdbc" auth="Container" type="javax.sql.DataSource"
+           maxActive="100" maxIdle="30" maxWait="10000"
+           username="user" password="javadude" 
+           driverClassName="com.mysql.cj.jdbc.Driver"
+           url="jdbc:mysql://localhost:3306/login"/>
+        
+           </Context>

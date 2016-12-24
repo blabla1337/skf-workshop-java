@@ -1,0 +1,57 @@
+  <html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<f:view contentType="text/html">
+
+  <h:head>
+  	<h:outputStylesheet name="common-style.css" library="css" />
+  </h:head>
+ 
+  <h:body>
+  	   <div id="page">    
+    <div id="header">
+      <ui:insert name="header" >
+      	
+        <ui:include src="commonHeader.xhtml" />
+      </ui:insert>
+      	<img src="resources/images/uns.png"></img>
+      </div>
+   
+      <div id="content">
+         <ui:insert name="content">
+           <ui:include src="commonContentMenu.xhtml" />
+         </ui:insert>
+
+<h:form>
+    <p:growl autoUpdate="true"/> 
+    <p:panelMenu>
+        <p:submenu label="UNS Training Demos (Secure Coding)">
+            <p:menuitem value="File Upload validation" url="http://tsec_secure.com:8080/SKF/FileUpload.xhtml"/>
+            <p:menuitem value="XML External Entities Prevention" url="http://tsec_secure.com:8080/SKF/xxe.xhtml"/>
+            <p:menuitem value="Aggregate Access Control" url="http://tsec_secure.com:8080/SKF/Aggregate.xhtml"/>
+            <p:menuitem value="User registration SQL truncation Prevention" url="http://tsec_secure.com:8080/SKF/register_login_menu.xhtml"/>
+            <p:menuitem value="Cross Site Request Forgery (CSRF) Prevention" url="http://tsec_secure.com:8080/SKF/csrf.xhtml"  />
+            <p:menuitem value="RFD and file download injection prevention" url="http://tsec_secure.com:8080/SKF/download.xhtml"/>               
+        </p:submenu>
+        <p:separator />
+    </p:panelMenu>
+</h:form>
+
+    </div>
+    
+     <div id="footer">
+        <ui:insert name="footer" >
+          <ui:include src="commonFooter.xhtml" />
+        </ui:insert>
+      </div>
+
+</div>
+  </h:body>
+  
+  </f:view>
+</html>
+ 
+

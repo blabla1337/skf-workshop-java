@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config
+    xmlns="http://java.sun.com/xml/ns/javaee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+    http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd"
+    version="2.0">
+
+<navigation-rule>
+	<from-view-id>register.xhtml</from-view-id>
+	<navigation-case>
+	     <from-action>#{navigationController.moveToSQLtruncationMenu}</from-action>
+		<from-outcome>register_login_menu</from-outcome>
+		<to-view-id>register_login_menu.xhtml</to-view-id>
+		<redirect />
+	</navigation-case>
+	<navigation-case>
+	     <from-action>#{navigationController.moveToMainMenu}</from-action>
+		<from-outcome>PanelMenu</from-outcome>
+		<to-view-id>PanelMenu.xhtml</to-view-id>
+		<redirect />
+	</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+	<from-view-id>admin_page.xhtml</from-view-id>
+	<navigation-case>
+		<from-outcome>password</from-outcome>
+		<to-view-id>password.xhtml</to-view-id>
+		<redirect />
+	</navigation-case>
+</navigation-rule>
+
+<navigation-rule>
+	<from-view-id>no_admin_page.xhtml</from-view-id>
+	<navigation-case>
+		<from-outcome>password</from-outcome>
+		<to-view-id>password.xhtml</to-view-id>
+		<redirect />
+	</navigation-case>
+</navigation-rule>
+
+</faces-config>

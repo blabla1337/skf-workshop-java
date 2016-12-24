@@ -1,0 +1,67 @@
+  <html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://java.sun.com/jsf/facelets">
+    
+    
+<f:view contentType="text/html">
+  <h:head>
+  
+  	<h:outputStylesheet name="common-style.css" library="css" />
+  </h:head>
+ 
+  <h:body>
+  	   <div id="page">    
+    <div id="header">
+      <ui:insert name="header" >
+      	
+        <ui:include src="commonHeader.xhtml" />
+      </ui:insert>
+      	<img src="resources/images/uns.png"></img>
+      </div>
+     
+      
+      <div id="content">
+         <ui:insert name="content">
+           <ui:include src="commonContentSQLtruncation.xhtml" />
+         </ui:insert>
+       
+	<h:form>
+    <h:panelGrid columns="2" styleClass="centered" id="matchGrid" cellpadding="1">
+    
+        <h:outputText styleClass="button" value="Username: " />
+        <p:inputText id="user" value="#{registerView.username}" />
+ 
+        <h:outputText styleClass="button" value="Password:" />
+        <p:password id="pass" value="#{registerView.password}" match="pwd2" feedback="true" />
+        
+        <h:outputText styleClass="button" value="Confirm Password:"/> 
+        <p:password id="pwd2" value="#{registerView.password2}" label="password" required="true"/>
+      
+    </h:panelGrid>
+
+ 	<p:commandButton update="matchGrid" value="Register" actionListener="#{registerView.register}" ajax="false" />
+
+
+	</h:form>
+	
+	<h:form>
+	<p:commandButton action="#{navigationController.moveToSQLtruncationMenu}" ajax="false" value="Menu" />
+	<p:spacer width="20" height="40" />
+	<p:commandButton action="#{navigationController.moveToMainMenu}" ajax="false" value="Main Menu" />
+	</h:form>
+
+    </div>
+    
+     <div id="footer">
+        <ui:insert name="footer" >
+          <ui:include src="commonFooter.xhtml" />
+        </ui:insert>
+      </div>
+    
+    
+</div>
+  </h:body>
+  </f:view>
+</html>

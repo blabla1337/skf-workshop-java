@@ -1,0 +1,71 @@
+
+ <html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://java.sun.com/jsf/facelets">
+  	
+  <h:head>
+   	<h:outputStylesheet name="common-style.css" library="css" />
+  </h:head>
+ 
+  <h:body>
+  	   <div id="page">    
+    <div id="header">
+      <ui:insert name="header" >
+        <ui:include src="commonHeader.xhtml" />
+      </ui:insert>
+      	<img src="resources/images/uns.png"></img>
+      </div>               
+      
+      <div id="content">
+         <ui:insert name="content" >
+           <ui:include src="commonContentFileUploadXML.xhtml" />
+         </ui:insert>
+
+      <h:form id="form" >
+ 		
+	<p:dataTable var="em" value="#{XMLDataPreview.emps}" ajax="false" update="@form">
+    <p:column headerText="Id">
+        <h:outputText value="#{em.id}" />
+    </p:column>
+ 
+    <p:column headerText="Name">
+        <h:outputText value="#{em.name}" />
+    </p:column>
+ 
+    <p:column headerText="Age">
+        <h:outputText value="#{em.age}" />
+    </p:column>
+ 
+    <p:column headerText="Role">
+        <h:outputText value="#{em.role}" />
+    </p:column>
+    
+     <p:column headerText="Gender">
+        <h:outputText value="#{em.gender}" />
+    </p:column>
+</p:dataTable>
+			
+    </h:form>
+    
+    <h:form>
+	<p:commandButton action="#{navigationController.moveToMainMenu}" ajax="false" value="Main Menu" />
+	<p:spacer width="20" height="40" />
+	<p:commandButton action="#{XMLDataPreview.clearEmployees}" ajax="false" value="Clear" />
+	<p:spacer width="20" height="40" />
+	<p:commandButton action="#{navigationController.moveToXXE}" ajax="false" value="Upload" />
+    </h:form>
+    
+    </div>
+    
+     <div id="footer">
+        <ui:insert name="footer" >
+          <ui:include src="commonFooter.xhtml" />
+        </ui:insert>
+      </div>
+    
+    
+</div>
+  </h:body>
+</html>
