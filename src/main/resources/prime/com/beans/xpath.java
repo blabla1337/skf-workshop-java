@@ -36,7 +36,7 @@ public class xpath {
           in this case we expect an integer we use our single input validation method for integers
           See the "input validation" code example for more detailed information.
           
-          For this example use the following XML snippet 
+          For this example we use the following XML snippet 
           
           		<?xml version="1.0" encoding="utf-8"?>
 					<Employees>
