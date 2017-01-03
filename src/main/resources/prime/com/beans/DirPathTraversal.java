@@ -3,9 +3,7 @@ package prime.com.beans;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-
 import org.apache.log4j.Logger;
-
 import com.edw.inputvalidation;
 import com.edw.whitelist;
 
@@ -29,7 +27,7 @@ public class DirPathTraversal {
     if (validate.validateInput(getFile.toString(), "nummeric", "Failed to get file", "HIGH", null) == false) { validated = false; }
 
     /*
-    see the "whitelisting" code example for more detailed information about this function
+    see the "white listing" code example for more detailed information about this function
     Let's assume there are three files named 1,2,3
     */
 
