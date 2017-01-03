@@ -18,20 +18,20 @@ import com.edw.inputvalidation;
 @ManagedBean
 public class xpath {
 	
-	private String text1;   
+	private String employeeID;   
 
-    public String getText1() {
-        return text1;
+    public String getEmployeeID() {
+        return employeeID;
     }
  
-    public void setText1(String text1) {
-        this.text1 = text1;
+    public void setEmployeeID(String employeeID) {
+        this.employeeID = employeeID;
     }
     
     
 	final static Logger logger = Logger.getLogger(xpath.class);
 
-	 public String selectPath(String employeeID)
+	 public String selectPath()
      {
           /*
           In order to prevent x-path injections we have to treat these query's similar as 
@@ -82,7 +82,7 @@ public class xpath {
          { continueFunction = false; }
 
 		
-         //Only if our validation function returned true we put the userinput in the function
+         //Only if our validation function returned true we put the user input in the function
          //fXmlFile is the java.io.File object of the example XML document.
          File fXmlFile = new File("C:\\xmldb\\users.xml");
          
