@@ -239,7 +239,7 @@ public class UserLogin  implements Serializable {
     public void isAuthenticated(ComponentSystemEvent event){
         
         FacesContext fc = FacesContext.getCurrentInstance();
-        LogoutBean log_out = new LogoutBean();
+        Logout log_out = new Logout();
                   
         if (log_out.isCookie_rem())
         {

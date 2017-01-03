@@ -75,7 +75,7 @@ public class RegisterUser {
 		public void updateUserPassword()
 		{	
 			//Set the aggregate access control 
-			AggregateBean ag = new AggregateBean();
+			Aggregate ag = new Aggregate();
 			HttpServletRequest origRequest = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
 			String userID = (String) origRequest.getSession().getAttribute("userID");
 			
