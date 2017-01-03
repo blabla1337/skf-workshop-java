@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
+import javax.faces.bean.ManagedBean;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
@@ -14,9 +15,20 @@ import org.xml.sax.InputSource;
 
 import com.edw.inputvalidation; 
 
+@ManagedBean
 public class xpath {
 	
-	
+	private String text1;   
+
+    public String getText1() {
+        return text1;
+    }
+ 
+    public void setText1(String text1) {
+        this.text1 = text1;
+    }
+    
+    
 	final static Logger logger = Logger.getLogger(xpath.class);
 
 	 public String selectPath(String employeeID)
