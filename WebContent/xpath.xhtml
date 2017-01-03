@@ -26,7 +26,24 @@
            <ui:include src="commonContentXPathQuery.xhtml" />
          </ui:insert>
 
-	
+	<h:form>      
+    <p:panel id="panel" header="Search Form" style="margin-bottom:10px;">
+        <p:messages id="messages" />
+ 
+        <h:panelGrid columns="4" cellpadding="5">
+            <h:outputLabel for="txt1" value="Eployee ID: *" />
+            <p:inputText id="txt1" value="#{searchView.text1}" required="true" label="Text 1">
+                <f:validateLength minimum="2" />
+            </p:inputText>
+            <p:message for="txt1" />
+            <h:outputText value="#{searchView.text1}" />
+        </h:panelGrid>
+    </p:panel>
+ 
+    <h:panelGrid columns="1">
+        <p:commandButton process="@form:@child(1):txt1" update="@form" value="Search" />
+    </h:panelGrid>
+</h:form>
 
     
     </div>
