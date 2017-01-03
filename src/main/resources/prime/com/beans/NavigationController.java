@@ -31,27 +31,6 @@ package prime.com.beans;
 	      return "password";
 	   }
 
-	   public String processPage1(){
-	      return "page";
-	   }
-
-	   public String processPage2(){
-	      return "page";
-	   }
-
-	   public String showPage(){
-	      if(pageId == null){
-	         return "home";
-	      }
-	      if(pageId.equals("1")){
-	         return "page1";
-	      }else if(pageId.equals("2")){
-	         return "page2";
-	      }else{
-	         return "home";
-	      }
-	   }
-
 	   public String getPageId() {
 	      return pageId;
 	   }
