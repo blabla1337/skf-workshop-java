@@ -99,7 +99,8 @@ public class xpath {
 	        	    //Node, org.w3c.dom.NodeList, or org.w3c.dom.Document.
 	        	    InputSource inputSource = new InputSource(new FileInputStream(fXmlFile));
 	        	    //Evaluate the XPath expression with the InputSource of the example XML document to evaluate over.
-					foo = xPathExpression.evaluate(inputSource);  			
+					foo = xPathExpression.evaluate(inputSource);  		
+					
 					
    					   					
 				} catch (IOException | XPathExpressionException e) {

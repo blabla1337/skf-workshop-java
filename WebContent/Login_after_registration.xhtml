@@ -19,7 +19,7 @@
       	<img src="resources/images/skf.png"></img>
 </div>
       <h:form>
-			  <p:commandLink id="nonAjax" actionListener="#{logoutBean.logout}" ajax="false">
+			  <p:commandLink id="nonAjax" actionListener="#{logout.logout}" ajax="false">
 		      	<p:graphicImage style="position:absolute; top:0; right:0; z-index: 1;" library="images" name="logout-64.png"></p:graphicImage>
 		      </p:commandLink></h:form>
       
@@ -40,11 +40,11 @@
         <h:panelGrid columns="2" id="def" cellpadding="5">
 
             <h:outputLabel for="username" value="Username:"/>
-            <p:inputText id="username" value="#{userLoginView.username}" required="true" label="username" />
+            <p:inputText id="username" value="#{userLogin.username}" required="true" label="username" />
 
             <h:outputLabel for="password" value="Password:"/>
 
-            <p:password id="password" value="#{userLoginView.password}" required="true" label="password" />
+            <p:password id="password" value="#{userLogin.password}" required="true" label="password" />
             <f:facet name="footer">
                 <p:commandButton value="Login" update="growl" actionListener="#{userLoginView.loginSQLtruncation}" oncomplete="handleLoginRequest(xhr, status, args)"/>
             </f:facet>  
