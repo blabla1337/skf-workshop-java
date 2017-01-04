@@ -91,7 +91,15 @@ public class xpath {
          
          //Here we put the variable in our input validation method in order to prevent untrusted user input from parsing
          //NOTE: logging and countering is also done in your validation method
-         if (validate.validateInput("", employeeID, "nummeric", "x-path input validation", "HIGH") == false) 
+         
+         //Input used into an XPATH expression must not contains any of the characters below:
+
+         //	 ( ) = ' [ ] : , * / WHITESPACE
+         
+         //Another method of avoiding XPath injections is by using variable into XPATH expression with a variable resolver enabled evaluator. 
+         //See XPath parameterization example
+         
+         if (validate.validateInput("", employeeID, "xpath", "x-path input validation", "HIGH") == false) 
          { continueFunction = false; }
 
 		
@@ -126,7 +134,9 @@ public class xpath {
 	        	    //For further reference on XPath expressions, 
 	        	    //see the XPath specification for examples on creating an XPath expression.
 	        	    
-	        	    XPathExpression expr = xpath.compile("/Employees/Employee[@ID=" + "'" + employeeID + "'" + "]/Type");	        	    
+	        	    XPathExpression expr = xpath.compile("/Employees/Employee[@ID=" + "'" + employeeID + "'" + "]/Type");
+	        	    
+	        	    
 	        	    
 	        	    //The evaluate method of the XPathExpression interface evaluates
 	        	    //either an InputSource or a node/node list of the types org.w3c.dom.
