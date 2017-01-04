@@ -100,8 +100,8 @@ public class xpath {
          File fXmlFile = new File("C:\\xmldb\\users.xml");
          
                   
-         //if (continueFunction == true)
-         //{     	 
+         if (continueFunction == true)
+         {     	 
                 	 
 				try { 					
         	 
@@ -138,7 +138,7 @@ public class xpath {
 				} catch (Exception e) {
 	       			e.printStackTrace();
 	       		}      	 
-         // }         
+          }         
 
      }
 	
