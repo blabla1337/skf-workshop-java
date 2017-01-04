@@ -100,8 +100,8 @@ public class xpath {
          File fXmlFile = new File("C:\\xmldb\\users.xml");
          
                   
-         if (continueFunction == true)
-         {     	 
+         //if (continueFunction == true)
+         //{     	 
                 	 
 				try { 					
         	 
@@ -121,7 +121,7 @@ public class xpath {
 	        	    XPath xpath = xPathfactory.newXPath();
         	  
 	        	    //Create and compile an XPath expression with the compile method of the XPath object. 
-	        	    //As an example, select the title of the article with its date attribute set to January-2004.
+	        	    //As an example, select the user ID attribute.
 	        	    //An attribute in an XPath expression is specified with an @ symbol. 
 	        	    //For further reference on XPath expressions, 
 	        	    //see the XPath specification for examples on creating an XPath expression.
@@ -138,7 +138,7 @@ public class xpath {
 				} catch (Exception e) {
 	       			e.printStackTrace();
 	       		}      	 
-          }         
+         // }         
 
      }
 	
