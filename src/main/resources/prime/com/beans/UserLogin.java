@@ -109,7 +109,6 @@ public class UserLogin  implements Serializable {
     		
     	//Second we include the password hash.
     	hashing hash = new hashing();
-		
 
     	//Last we include the random input validation class.
         inputvalidation validate = new inputvalidation();

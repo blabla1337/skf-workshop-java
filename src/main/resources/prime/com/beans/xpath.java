@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -78,7 +79,7 @@ public class xpath {
           As with every injection prevention we first focus on the expected user values
           in this case we expect an integer we use our single input validation method for integers
           See the "input validation" code example for more detailed information.
-          
+
           For the purpose of this example we use the following XML snippet 
           
           		<?xml version="1.0" encoding="utf-8"?>
@@ -98,7 +99,6 @@ public class xpath {
 					      <Type>User</Type>
 					   </Employee>
 					</Employees>
-
           */
      
 		 boolean continueFunction = true;         
@@ -114,8 +114,8 @@ public class xpath {
          //Another method of avoiding XPath injections is by using variable into XPATH expression with a variable resolver enabled evaluator. 
          //See XPath parameterization example
          
-	      if (validate.validateInput("",employeeID,"symbols", "x-path input validation", "HIGH") == false) 
-	      { continueFunction = false; }
+	     if (validate.validateInput("",employeeID,"symbols", "x-path input validation", "HIGH") == false) 
+	     { continueFunction = false; }
 	
          //Only if our validation function returned true we put the user input in the function
          //fXmlFile is the java.io.File object of the example XML document.
@@ -150,12 +150,20 @@ public class xpath {
 	        	    //Node, org.w3c.dom.NodeList, or org.w3c.dom.Document.
 	        	    //Evaluate the XPath expression with the InputSource of the example XML document to evaluate over.
 	        	    String numberOfDownloads = expr.evaluate(document, XPathConstants.STRING).toString(); 
-				 	this.setEmployeeRole(numberOfDownloads);					   					
+				 	this.setEmployeeRole(numberOfDownloads);
+				 	
+				 	
+				 	if (numberOfDownloads.equals("Admin"))
+				 	{
+				 		FacesContext.getCurrentInstance().getExternalContext().redirect("admin_page.xhtml");
+				 	}
+				 	else if (numberOfDownloads.equals("User"))
+				 	{
+				 		FacesContext.getCurrentInstance().getExternalContext().redirect("user_page.xhtml");
+				 	}		 		
 				} catch (Exception e) {
 	       			e.printStackTrace();
 	       		}      	 
           }         
-
      }
-	
 }
