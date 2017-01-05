@@ -5,12 +5,12 @@ import java.io.FileInputStream;
 import java.io.IOException;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.event.ActionEvent;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpression;
-import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
 import org.apache.log4j.Logger;
@@ -24,8 +24,26 @@ public class xpath {
 	
 	private String employeeID;
 	private String employeeRole;
+	private String username;
+	private String password; 
 
-    public String getEmployeeRole() {
+    public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getEmployeeRole() {
 		return employeeRole;
 	}
 
@@ -44,7 +62,7 @@ public class xpath {
     
 	final static Logger logger = Logger.getLogger(xpath.class);
 
-	 public void selectPath()
+	 public void xpathLogin(ActionEvent event) throws IOException
      {
           /*
           In order to prevent x-path injections we have to treat these query's similar as 
@@ -61,7 +79,7 @@ public class xpath {
           in this case we expect an integer we use our single input validation method for integers
           See the "input validation" code example for more detailed information.
           
-          For this example we use the following XML snippet 
+          For the purpose of this example we use the following XML snippet 
           
           		<?xml version="1.0" encoding="utf-8"?>
 					<Employees>
@@ -83,12 +101,9 @@ public class xpath {
 
           */
      
-		 boolean continueFunction = true;
-         String foo = "";
-
+		 boolean continueFunction = true;         
          inputvalidation validate = new inputvalidation();
-         
-         
+  
          //Here we put the variable in our input validation method in order to prevent untrusted user input from parsing
          //NOTE: logging and countering is also done in your validation method
          
@@ -99,18 +114,17 @@ public class xpath {
          //Another method of avoiding XPath injections is by using variable into XPATH expression with a variable resolver enabled evaluator. 
          //See XPath parameterization example
          
-         if (validate.validateInput("",employeeID,"symbols", "x-path input validation", "HIGH") == false) 
-         { continueFunction = false; }
+	      if (validate.validateInput("",employeeID,"symbols", "x-path input validation", "HIGH") == false) 
+	      { continueFunction = false; }
 	
          //Only if our validation function returned true we put the user input in the function
          //fXmlFile is the java.io.File object of the example XML document.
+         
          File fXmlFile = new File("C:\\xmldb\\users.xml");
           
          if (continueFunction == true)
-         {     	 
-                	 
+         {     	     	 
 				try { 					
-        	 
 					//The evaluate methods in the XPath and XPathExpression interfaces 
 					//are used to parse an XML document with XPath expressions.					
 					DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -121,26 +135,22 @@ public class xpath {
 	       		    //The XPathFactory class is used to create an XPath object.
 					//Create an XPathFactory object with the static newInstance method of the XPathFactory class.
 	        	    XPathFactory xPathfactory = XPathFactory.newInstance();
-        	  
-	        	    //Create an XPath object from the XPathFactory object with the newXPath method.
-        	  
+	        	    //Create an XPath object from the XPathFactory object with the newXPath method.  
 	        	    XPath xpath = xPathfactory.newXPath();
-        	  
 	        	    //Create and compile an XPath expression with the compile method of the XPath object. 
 	        	    //As an example, select the user ID attribute.
 	        	    //An attribute in an XPath expression is specified with an @ symbol. 
 	        	    //For further reference on XPath expressions, 
 	        	    //see the XPath specification for examples on creating an XPath expression.
-	        	    
-	        	    XPathExpression expr = xpath.compile("/Employees/Employee[@ID=" + "'" + employeeID + "'" + "]/Type");
-	        	    
+	        	    //String EmployeeIDexp = "/Employees/Employee[@ID=" + "'" + employeeID + "'" + "]/Type";
+	        	    String login = "/Employees/Employee[UserName='" + username + "' and  Password='" + password + "']/Type";
+	        	    XPathExpression expr = xpath.compile(login);
 	        	    //The evaluate method of the XPathExpression interface evaluates
 	        	    //either an InputSource or a node/node list of the types org.w3c.dom.
 	        	    //Node, org.w3c.dom.NodeList, or org.w3c.dom.Document.
 	        	    //Evaluate the XPath expression with the InputSource of the example XML document to evaluate over.
-	        	    String numberOfDownloads = expr.evaluate(document, XPathConstants.STRING).toString();
-				 	this.setEmployeeRole(numberOfDownloads);
-   					   					
+	        	    String numberOfDownloads = expr.evaluate(document, XPathConstants.STRING).toString(); 
+				 	this.setEmployeeRole(numberOfDownloads);					   					
 				} catch (Exception e) {
 	       			e.printStackTrace();
 	       		}      	 
