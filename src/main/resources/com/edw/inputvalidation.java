@@ -16,15 +16,18 @@ public class inputvalidation {
          Whenever the values are tampered with, we can assume an attacker is trying to inject malicious input.           
          */
          String validator = "";
-         switch (type)
-         {
-             case "alphanummeric":
-                 validator = "^[A-Z0-9]+$";                  
-                 break;
-             case "nummeric":
-                 validator = "^[0-9]*$";
-                 break;
-         }
+    	 if(type.equals("symbols"))
+		 {
+			 //Characters that may be used to interfere with the XPath query should be blocked, including ( ) = ‘ [ ] : , * / and all whitespace. 
+        	 // Any input that does not match the white list should be rejected, not sanitized.
+    		 validator = "()='[]:,*/ ";
+		 }
+		 else if (type.equals("alphanummeric"))		 
+			 validator = "^[a-zA-Z0-9]<>?\"\"+$#!";  		 
+		 else if (type.equals("nummeric"))
+			 validator = "^[0-9]*$";
+		 else
+			 validator = "";
 
 	      // Create a Pattern object
 	      Pattern r = Pattern.compile(validator);
@@ -75,14 +78,22 @@ public class inputvalidation {
          we want to filter the filenames for expected values. For this example we use only a-z/0-9
          Whenever the values are tampered with, we can assume an attacker is trying to inject malicious input.           
          */
+		 String validator = "";
+		 
+		 if(type.equals("symbols"))
+		 {
+			 //Characters that may be used to interfere with the XPath query should be blocked, including ( ) = ‘ [ ] : , * / and all whitespace. 
+        	 // Any input that does not match the white list should be rejected, not sanitized.
+    		 validator = "()='[]:,*/ \t\n\r\f\\x0b";
+    		 
+		 }
+		 else if (type.equals("alphanummeric"))		 
+			 validator = "^[a-zA-Z0-9]<>?\"\"+$#!";  		 
+		 else if (type.equals("nummeric"))
+			 validator = "^[0-9]*$";
+		 else
+			 validator = "";
 
-         String validator = "";
-         
-         if (type.equals("alphanumeric"))
-        	  validator = "^[a-zA-Z0-9]<>?\"\"+$#!"; 
-         else if (type.equals("nummeric"))
-        	   validator = "^[0-9]*$";
-        
 	      // Create a Pattern object
 	      Pattern r = Pattern.compile(validator);
 	      boolean validate = false ; 

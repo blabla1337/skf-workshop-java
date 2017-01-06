@@ -160,7 +160,8 @@ public class xpath {
 				 	else if (numberOfDownloads.equals("User"))
 				 	{
 				 		FacesContext.getCurrentInstance().getExternalContext().redirect("user_page.xhtml");
-				 	}		 		
+				 	}	
+				 	
 				} catch (Exception e) {
 	       			e.printStackTrace();
 	       		}      	 
