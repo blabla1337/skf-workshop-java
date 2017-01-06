@@ -11,7 +11,6 @@ import javax.faces.application.ConfigurableNavigationHandler;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.xml.parsers.ParserConfigurationException;
@@ -24,7 +23,9 @@ import org.primefaces.model.UploadedFile;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 
-import com.edw.inputvalidation;
+import com.Lib.Employee;
+import com.Lib.MyHandler;
+import com.Lib.inputvalidation;
 
 @ManagedBean(name="XMLDataPreview")
 @SessionScoped

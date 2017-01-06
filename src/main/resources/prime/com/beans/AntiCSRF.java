@@ -10,8 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
-import com.edw.AuditLog;
-import com.edw.randomizer;
+import com.Lib.AuditLog;
+import com.Lib.randomizer;
 import java.io.IOException;
 import java.util.Map;
 

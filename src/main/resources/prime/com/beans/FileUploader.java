@@ -21,9 +21,9 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.io.FilenameUtils;
 import org.primefaces.event.FileUploadEvent;
 
-import com.edw.AuditLog;
-import com.edw.WinRegistry;
-import com.edw.inputvalidation;
+import com.Lib.AuditLog;
+import com.Lib.WinRegistry;
+import com.Lib.inputvalidation;
 
  
 @ManagedBean(name="fileUploadController")

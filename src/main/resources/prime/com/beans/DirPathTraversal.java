@@ -4,8 +4,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import org.apache.log4j.Logger;
-import com.edw.inputvalidation;
-import com.edw.whitelist;
+import com.Lib.inputvalidation;
+import com.Lib.whitelist;
 
 public class DirPathTraversal {
 	

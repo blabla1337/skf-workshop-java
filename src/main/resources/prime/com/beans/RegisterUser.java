@@ -20,8 +20,8 @@ import javax.sql.DataSource;
 
 import org.apache.log4j.Logger;
 
-import com.edw.AuditLog;
-import com.edw.hashing;
+import com.Lib.AuditLog;
+import com.Lib.hashing;
 
 
 @ManagedBean

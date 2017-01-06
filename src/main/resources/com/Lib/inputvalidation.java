@@ -1,4 +1,4 @@
-package com.edw;
+package com.Lib;
 
 import java.time.LocalDateTime;
 import java.util.regex.Matcher;
@@ -84,7 +84,7 @@ public class inputvalidation {
 		 {
 			 //Characters that may be used to interfere with the XPath query should be blocked, including ( ) = ‘ [ ] : , * / and all whitespace. 
         	 // Any input that does not match the white list should be rejected, not sanitized.
-    		 validator = "()='[]:,*/ \t\n\r\f\\x0b";
+    		 validator = "^()='\\[\\]:,\\*/ \t\n\r\f\\x0b$";
     		 
 		 }
 		 else if (type.equals("alphanummeric"))		 

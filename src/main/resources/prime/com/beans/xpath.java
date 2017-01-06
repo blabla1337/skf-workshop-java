@@ -18,7 +18,7 @@ import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 
-import com.edw.inputvalidation; 
+import com.Lib.inputvalidation; 
 
 @ManagedBean
 public class xpath {
