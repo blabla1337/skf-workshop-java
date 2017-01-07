@@ -243,7 +243,7 @@ public class UserLogin  implements Serializable {
         if (log_out.isCookie_rem())
         {
         	 try {
-				FacesContext.getCurrentInstance().getExternalContext().redirect("UserLogin.xhtml");
+				FacesContext.getCurrentInstance().getExternalContext().redirect("Menu.xhtml");
 			} catch (IOException e) {
 				logger.warn(e.toString());
 			}
