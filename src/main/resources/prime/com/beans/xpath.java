@@ -156,8 +156,8 @@ public class xpath  implements Serializable {
 						      <LastName>Baker</LastName>
 						      <UserName>ABaker</UserName>
 							  <id>1</id>
-						      <Password>+udURk9/QIFiHTT0cZruIrdvB57hJtNfKQ==</Password>
-							  <salt>5hUCuJMMu/rK/WTy449Ysv+e8b1/LtodLw==</salt>
+							  <Password>0FUzXs7f3NF6RijXPoom5QounoS+pnv5Ag==</Password>  <!-- SoSecure -->
+							  <salt>+yoY1sPd+V6SC+0aEiA9lHjV9EC8zOCw+A==</salt>
 						      <Type>Admin</Type>
 						   </Employee>
 						   <Employee ID="2">
@@ -225,8 +225,7 @@ public class xpath  implements Serializable {
 	        	    //either an InputSource or a node/node list of the types org.w3c.dom.
 	        	    //Node, org.w3c.dom.NodeList, or org.w3c.dom.Document.
 	        	    //Evaluate the XPath expression with the InputSource of the example XML document to evaluate over.	
-	        	    
-	        	   	        	    
+	        	    	        	   	        	    
 	        	    String salt= "/Employees/Employee[UserName='" + username + "']/salt";
 	        	    XPathExpression salt_expr = xpath.compile(salt);	              	    
 	        	    String Salt_result = salt_expr.evaluate(document, XPathConstants.STRING).toString();         	 

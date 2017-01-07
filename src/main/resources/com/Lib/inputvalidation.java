@@ -85,7 +85,7 @@ public class inputvalidation {
 			 //Characters that may be used to interfere with the XPath query should be blocked, including ( ) = ‘ [ ] : , * / and all whitespace. 
         	 // Any input that does not match the white list should be rejected, not sanitized.
     		 //validator = "^()='\\[\\]:,\\*/ $";
-			 validator = "\\D*";
+			 validator = "(.*)(\\W+)(\\D+)(\\s+)(.*)";
     		 
 		 }
 		 else if (type.equals("alphanummeric"))		 
