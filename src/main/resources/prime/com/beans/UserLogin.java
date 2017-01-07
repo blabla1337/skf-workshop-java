@@ -256,7 +256,8 @@ public class UserLogin  implements Serializable {
         
         else if (this.isLoggedIn())
         {
-        	if (fc.getExternalContext().getSessionMap().get(AUTH_KEY) != null)
+        	//if (fc.getExternalContext().getSessionMap().get(AUTH_KEY) != null)
+        		if (this.getUsername() != null)
 	        if (!this.getUsername().equals(fc.getExternalContext().getSessionMap().get(AUTH_KEY))){
 	          ConfigurableNavigationHandler nav = (ConfigurableNavigationHandler) fc.getApplication().getNavigationHandler();        
 	          nav.performNavigation("access-denied");

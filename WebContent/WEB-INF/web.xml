@@ -25,17 +25,8 @@
   <servlet-mapping>
     <servlet-name>Faces Servlet</servlet-name>
     <url-pattern>/faces/*</url-pattern>
-  </servlet-mapping>
-  <servlet-mapping>
-    <servlet-name>Faces Servlet</servlet-name>
     <url-pattern>*.jsf</url-pattern>
-  </servlet-mapping>
-  <servlet-mapping>
-    <servlet-name>Faces Servlet</servlet-name>
     <url-pattern>*.faces</url-pattern>
-  </servlet-mapping>
-  <servlet-mapping>
-    <servlet-name>Faces Servlet</servlet-name>
     <url-pattern>*.xhtml</url-pattern>
   </servlet-mapping>
   <filter>
@@ -43,7 +34,7 @@
     <filter-class>org.primefaces.webapp.filter.FileUploadFilter</filter-class>
     <init-param>
       <param-name>uploadDirectory</param-name>
-      <param-value>C:\Users\xvassilakopoulos\Desktop\test\test1</param-value>
+      <param-value>C:\test\test1</param-value>
     </init-param>
   </filter>
   <filter-mapping>

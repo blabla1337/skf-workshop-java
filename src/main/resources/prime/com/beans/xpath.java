@@ -3,10 +3,18 @@ package prime.com.beans;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.util.UUID;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.xpath.XPath;
@@ -15,20 +23,37 @@ import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathFactory;
 
 import org.apache.log4j.Logger;
+import org.primefaces.context.RequestContext;
 import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 
+import com.Lib.AuditLog;
+import com.Lib.hashing;
 import com.Lib.inputvalidation; 
 
 @ManagedBean
-public class xpath {
+@SessionScoped
+public class xpath  implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
+	//First we include the audit log class.
+	AuditLog Log = new AuditLog();
+		
+	//Second we include the password hash.
+	hashing hash = new hashing();
+
+	
+	final static Logger logger = Logger.getLogger(xpath.class);
+	
+	public static final String AUTH_KEY = "User: ";
 	
 	private String employeeID;
 	private String employeeRole;
 	private String username;
 	private String password; 
 
-    public String getUsername() {
+
+	public String getUsername() {
 		return username;
 	}
 
@@ -60,10 +85,52 @@ public class xpath {
         this.employeeID = employeeID;
     }
     
-    
-	final static Logger logger = Logger.getLogger(xpath.class);
+   	
+	public void loginAction(String userId){
+		
+		
+    	//we include the random input validation class.
+        
+        HttpServletRequest origRequest = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        HttpServletResponse origResponse = (HttpServletResponse)FacesContext.getCurrentInstance().getExternalContext().getResponse();
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put(AUTH_KEY, username);
+        
+        String uname = this.getUsername(); 
+       
+        
+ 
+        	/*
+            This is is to prevent session fixation, after login we create a new cookie which
+            we then use to authenticate. This value can not be fixated since it is set after 
+            login.
 
-	 public void xpathLogin(ActionEvent event) throws IOException
+            create a new UUID and save into the session:
+            */
+        	 UUID uuid = UUID.randomUUID();
+        	 String randomUUIDString = uuid.toString();
+        	 //initiate a session
+        	 origRequest.getSession(true);
+        	 origRequest.getSession().setAttribute("AuthToken", randomUUIDString);     	
+        	// now create a new cookie with this UUID value
+        	 Cookie newCookie = new Cookie("AuthToken", randomUUIDString);   
+        	 
+        	 origResponse.addCookie(newCookie);
+        	 
+        	//the connection has to be reported into the log files
+             Log.SetLog("", "", "login was OK!", null, "SUCCESS", "NULL");    
+                
+             /*
+             Put id in a session for query identifier based authentication
+             See "identifier based authentication" code example for more information
+              */
+
+             origRequest.getSession().setAttribute("userID", userId);
+             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put(AUTH_KEY, uname);
+      
+		
+	}
+
+	 public void xpathLogin(ActionEvent event) throws IOException 
      {
           /*
           In order to prevent x-path injections we have to treat these query's similar as 
@@ -88,19 +155,23 @@ public class xpath {
 					      <FirstName>Arnold</FirstName>
 					      <LastName>Baker</LastName>
 					      <UserName>ABaker</UserName>
-					      <Password>SoSecret</Password>
+						  <id>1</id>
+					      <Password>GJ+SkA0uLAv0boh+NA1BgJVus75POm7j1g==</Password>
 					      <Type>Admin</Type>
 					   </Employee>
 					   <Employee ID="2">
 					      <FirstName>Peter</FirstName>
 					      <LastName>Pan</LastName>
 					      <UserName>PPan</UserName>
-					      <Password>NotTelling</Password>
+						  <id>2</id>
+					      <Password>fJk6u1TQyJmatHD59Ks13D5n8+iOzW3rmQ==</Password>
 					      <Type>User</Type>
 					   </Employee>
 					</Employees>
           */
-     
+		 RequestContext context = RequestContext.getCurrentInstance();
+		 FacesMessage message = null;
+	     boolean loggedIn = false;
 		 boolean continueFunction = true;         
          inputvalidation validate = new inputvalidation();
   
@@ -114,8 +185,12 @@ public class xpath {
          //Another method of avoiding XPath injections is by using variable into XPATH expression with a variable resolver enabled evaluator. 
          //See XPath parameterization example
          
-	     if (validate.validateInput("",employeeID,"symbols", "x-path input validation", "HIGH") == false) 
-	     { continueFunction = false; }
+	    // if (validate.validateInput(username,username,"symbols", "x-path input validation", "HIGH") == false) 
+	    // { continueFunction = false; }
+	     
+	    // if (validate.validateInput(username,password,"symbols", "x-path input validation", "HIGH") == false) 
+	    // { continueFunction = false; }
+	     
 	
          //Only if our validation function returned true we put the user input in the function
          //fXmlFile is the java.io.File object of the example XML document.
@@ -124,7 +199,8 @@ public class xpath {
           
          if (continueFunction == true)
          {     	     	 
-				try { 					
+				try { 		
+					
 					//The evaluate methods in the XPath and XPathExpression interfaces 
 					//are used to parse an XML document with XPath expressions.					
 					DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
@@ -142,25 +218,55 @@ public class xpath {
 	        	    //An attribute in an XPath expression is specified with an @ symbol. 
 	        	    //For further reference on XPath expressions, 
 	        	    //see the XPath specification for examples on creating an XPath expression.
-	        	    //String EmployeeIDexp = "/Employees/Employee[@ID=" + "'" + employeeID + "'" + "]/Type";
-	        	    String login = "/Employees/Employee[UserName='" + username + "' and  Password='" + password + "']/Type";
-	        	    XPathExpression expr = xpath.compile(login);
-	        	    //The evaluate method of the XPathExpression interface evaluates
+	        	    
+	          	    //The evaluate method of the XPathExpression interface evaluates
 	        	    //either an InputSource or a node/node list of the types org.w3c.dom.
 	        	    //Node, org.w3c.dom.NodeList, or org.w3c.dom.Document.
-	        	    //Evaluate the XPath expression with the InputSource of the example XML document to evaluate over.
-	        	    String numberOfDownloads = expr.evaluate(document, XPathConstants.STRING).toString(); 
-				 	this.setEmployeeRole(numberOfDownloads);
+	        	    //Evaluate the XPath expression with the InputSource of the example XML document to evaluate over.	
+	        	    
+	        	    
+	        	    String salt= "/Employees/Employee[UserName='" + username + "']/salt";
+	        	    XPathExpression salt_expr = xpath.compile(salt);	              	    
+	        	    String Salt_result = salt_expr.evaluate(document, XPathConstants.STRING).toString();         	 
+	        	  
+	        	    String Password = hash.hashPassword(Salt_result, password);
+	        	    
+	        	    String userID= "/Employees/Employee[UserName='" + username + "' and  Password='" + Password + "']/id";
+	        	    XPathExpression userID_expr = xpath.compile(userID);
+	        	    String userID_result = userID_expr.evaluate(document, XPathConstants.STRING).toString();
+	        	    
+	        	    String login = "/Employees/Employee[UserName='" + username + "' and  Password='" + Password + "']/Type";   	    	        	    	        	 
+	        	    XPathExpression login_expr = xpath.compile(login);
+	        	    String login_result = login_expr.evaluate(document, XPathConstants.STRING).toString(); 
+	        	    
 				 	
-				 	
-				 	if (numberOfDownloads.equals("Admin"))
+				 	if (login_result.equals(""))
 				 	{
+				 		//the connection has to be reported into the log files
+			            Log.SetLog(username, "", "Login failed!", LocalDateTime.now(), "FAIL", "NULL");
+			            message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Loggin Error", "Invalid credentials"); 
+				 		FacesContext.getCurrentInstance().getExternalContext().redirect("xpath.xhtml");
+				 	}
+				 	else if (login_result.equals("Admin"))
+				 	{
+				 		this.loginAction(userID_result);
+				 		//the connection has to be reported into the log files
+			            Log.SetLog(username, "", "Login successfully!", LocalDateTime.now(), "SUCCESS", "");
+				 		loggedIn = true;
+			            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Welcome", username);
 				 		FacesContext.getCurrentInstance().getExternalContext().redirect("admin_page.xhtml");
 				 	}
-				 	else if (numberOfDownloads.equals("User"))
+				 	else if (login_result.equals("User"))
 				 	{
+				 		this.loginAction(userID_result);
+				 		Log.SetLog(username, "", "Login successfully!", LocalDateTime.now(), "SUCCESS", "");
+				 		loggedIn = true;
+			            message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Welcome", username);
 				 		FacesContext.getCurrentInstance().getExternalContext().redirect("user_page.xhtml");
 				 	}	
+				 	  
+			        FacesContext.getCurrentInstance().addMessage(null, message);
+			        context.addCallbackParam("loggedIn", loggedIn);
 				 	
 				} catch (Exception e) {
 	       			e.printStackTrace();

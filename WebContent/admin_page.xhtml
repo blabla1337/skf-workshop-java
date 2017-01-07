@@ -7,7 +7,7 @@
  
  <f:view contentType="text/html">
  
-<f:event listener="#{userLoginView.isAuthenticated}" type="preRenderView" />
+<f:event listener="#{userLogin.isAuthenticated}" type="preRenderView" />
  
   <h:head>
     <h:outputStylesheet name="common-style.css" library="css" />
@@ -23,7 +23,7 @@
       	<img src="resources/images/skf.png"></img>
 </div>
       <h:form>
-			  <p:commandLink id="nonAjax" actionListener="#{logoutBean.logout}" ajax="false">
+			  <p:commandLink id="nonAjax" actionListener="#{logout.logout}" ajax="false">
 		      	<p:graphicImage style="position:absolute; top:0; right:0; z-index: 1;" library="images" name="logout-64.png"></p:graphicImage>
 		      </p:commandLink></h:form>
       
@@ -34,7 +34,7 @@
 	
 	  <div class="centered">
     	<h:outputLabel styleClass="user_login" for="name" value="Welcome " />
-    	<h:outputText styleClass="user_login" id="name" value="#{userLoginView.username}" />     	
+    	<h:outputText styleClass="user_login" id="name" value="#{userLogin.username}" />     	
     	<p:spacer height="10" /> 
     <p:separator style="border: 0px" />
   	   	  

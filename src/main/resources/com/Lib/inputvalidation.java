@@ -84,7 +84,8 @@ public class inputvalidation {
 		 {
 			 //Characters that may be used to interfere with the XPath query should be blocked, including ( ) = ‘ [ ] : , * / and all whitespace. 
         	 // Any input that does not match the white list should be rejected, not sanitized.
-    		 validator = "^()='\\[\\]:,\\*/ \t\n\r\f\\x0b$";
+    		 //validator = "^()='\\[\\]:,\\*/ $";
+			 validator = "\\D*";
     		 
 		 }
 		 else if (type.equals("alphanummeric"))		 
@@ -105,11 +106,11 @@ public class inputvalidation {
 	    	    validate = true; 
 	    	   
 	    	    //this breach has to be reported into the log files
-				Log.SetLog("", logMessage , "SUCCESS", LocalDateTime.now(),  theatLevel);   
+				Log.SetLog(username, logMessage , "SUCCESS", LocalDateTime.now(),  theatLevel);   
 	      }		
 	      else
 	      {
-	    	    Log.SetLog("", logMessage , "FAIL", LocalDateTime.now(), "NULL");
+	    	    Log.SetLog(username, logMessage , "FAIL", LocalDateTime.now(), "NULL");
 	    	  
 	      }        
          
