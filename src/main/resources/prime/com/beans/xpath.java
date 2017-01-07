@@ -150,24 +150,26 @@ public class xpath  implements Serializable {
           For the purpose of this example we use the following XML snippet 
           
           		<?xml version="1.0" encoding="utf-8"?>
-					<Employees>
-					   <Employee ID="1">
-					      <FirstName>Arnold</FirstName>
-					      <LastName>Baker</LastName>
-					      <UserName>ABaker</UserName>
-						  <id>1</id>
-					      <Password>GJ+SkA0uLAv0boh+NA1BgJVus75POm7j1g==</Password>
-					      <Type>Admin</Type>
-					   </Employee>
-					   <Employee ID="2">
-					      <FirstName>Peter</FirstName>
-					      <LastName>Pan</LastName>
-					      <UserName>PPan</UserName>
-						  <id>2</id>
-					      <Password>fJk6u1TQyJmatHD59Ks13D5n8+iOzW3rmQ==</Password>
-					      <Type>User</Type>
-					   </Employee>
-					</Employees>
+						<Employees>
+						   <Employee ID="1">
+						      <FirstName>Arnold</FirstName>
+						      <LastName>Baker</LastName>
+						      <UserName>ABaker</UserName>
+							  <id>1</id>
+						      <Password>+udURk9/QIFiHTT0cZruIrdvB57hJtNfKQ==</Password>
+							  <salt>5hUCuJMMu/rK/WTy449Ysv+e8b1/LtodLw==</salt>
+						      <Type>Admin</Type>
+						   </Employee>
+						   <Employee ID="2">
+						      <FirstName>Peter</FirstName>
+						      <LastName>Pan</LastName>
+						      <UserName>PPan</UserName>
+							  <id>2</id>
+						      <Password>Cftv1ip25PJdmf8DdfU5NM/K/cjEqEAthw==</Password>  <!-- NoTelling -->
+							  <salt>/KAMdM09RVNZ8nOWHAsqKzrfyY6VEZgRQA==</salt>
+						      <Type>User</Type>
+						   </Employee>
+						</Employees>
           */
 		 RequestContext context = RequestContext.getCurrentInstance();
 		 FacesMessage message = null;
@@ -224,7 +226,7 @@ public class xpath  implements Serializable {
 	        	    //Node, org.w3c.dom.NodeList, or org.w3c.dom.Document.
 	        	    //Evaluate the XPath expression with the InputSource of the example XML document to evaluate over.	
 	        	    
-	        	    
+	        	   	        	    
 	        	    String salt= "/Employees/Employee[UserName='" + username + "']/salt";
 	        	    XPathExpression salt_expr = xpath.compile(salt);	              	    
 	        	    String Salt_result = salt_expr.evaluate(document, XPathConstants.STRING).toString();         	 
