@@ -156,7 +156,7 @@ public class xpath  implements Serializable {
 						      <LastName>Baker</LastName>
 						      <UserName>ABaker</UserName>
 							  <id>1</id>
-							  <Password>0FUzXs7f3NF6RijXPoom5QounoS+pnv5Ag==</Password>  <!-- SoSecure -->
+							  <Password>Hv3KPG906xBBhE1z3k5QRD9SArIYLeiSFA==</Password>  <!-- SoSecure -->
 							  <salt>+yoY1sPd+V6SC+0aEiA9lHjV9EC8zOCw+A==</salt>
 						      <Type>Admin</Type>
 						   </Employee>
