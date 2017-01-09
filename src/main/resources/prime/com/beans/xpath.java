@@ -184,6 +184,8 @@ public class xpath  implements Serializable {
 		username : ' or substring((//Employee[position()=1]/child::node()[position()=2]),1,1)="A" or ''='
 		password : blah
 		
+		in order to test any of the above exploit cases just comment out the input validation lines 207 and 210 below.  
+		
 		
           */
 		 RequestContext context = RequestContext.getCurrentInstance();
