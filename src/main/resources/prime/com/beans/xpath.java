@@ -51,7 +51,25 @@ public class xpath  implements Serializable {
 	private String employeeRole;
 	private String username;
 	private String password; 
+	private String userID_result;
+	private String userID;
 
+
+	public String getUserID_result() {
+		return userID_result;
+	}
+
+	public void setUserID_result(String userID_result) {
+		this.userID_result = userID_result;
+	}
+
+	public String getUserID() {
+		return userID;
+	}
+
+	public void setUserID(String userID) {
+		this.userID = userID;
+	}
 
 	public String getUsername() {
 		return username;
@@ -128,6 +146,56 @@ public class xpath  implements Serializable {
              FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put(AUTH_KEY, uname);
       
 		
+	}
+	
+	public String xpathconnect(File fXmlFile){
+		
+		String login_result = null;
+		    	     	 
+				try { 
+					//The evaluate methods in the XPath and XPathExpression interfaces 
+					//are used to parse an XML document with XPath expressions.					
+					DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+	       			DocumentBuilder builder = factory.newDocumentBuilder();
+	       		    //Create an InputSource for the example XML document.
+	        	    //An InputSource is a input class for an XML entity.	        	    
+	       			Document document = builder.parse(new InputSource(new FileInputStream(fXmlFile)));
+	       		    //The XPathFactory class is used to create an XPath object.
+					//Create an XPathFactory object with the static newInstance method of the XPathFactory class.
+	        	    XPathFactory xPathfactory = XPathFactory.newInstance();
+	        	    //Create an XPath object from the XPathFactory object with the newXPath method.  
+	        	    XPath xpath = xPathfactory.newXPath();
+	        	    //Create and compile an XPath expression with the compile method of the XPath object. 
+	        	    //As an example, select the user ID attribute.
+	        	    //An attribute in an XPath expression is specified with an @ symbol. 
+	        	    //For further reference on XPath expressions, 
+	        	    //see the XPath specification for examples on creating an XPath expression.
+	        	    
+	          	    //The evaluate method of the XPathExpression interface evaluates
+	        	    //either an InputSource or a node/node list of the types org.w3c.dom.
+	        	    //Node, org.w3c.dom.NodeList, or org.w3c.dom.Document.
+	        	    //Evaluate the XPath expression with the InputSource of the example XML document to evaluate over.	
+	        	    	        	   	        	    
+	        	    String salt= "/Employees/Employee[UserName='" + username + "']/salt";
+	        	    XPathExpression salt_expr = xpath.compile(salt);	              	    
+	        	    String Salt_result = salt_expr.evaluate(document, XPathConstants.STRING).toString();         	 
+	        	  
+	        	    String Password = hash.hashPassword(Salt_result, password);
+	        	    
+	        	    userID= "/Employees/Employee[UserName='" + username + "' and  Password='" + Password + "']/id";
+	        	    XPathExpression userID_expr = xpath.compile(userID);
+	        	    userID_result = userID_expr.evaluate(document, XPathConstants.STRING).toString();
+	        	    
+	        	    String login = "/Employees/Employee[UserName='" + username + "' and  Password='" + Password + "']/Type";   	    	        	    	        	 
+	        	    XPathExpression login_expr = xpath.compile(login);
+	        	    login_result = login_expr.evaluate(document, XPathConstants.STRING).toString(); 
+	        	    
+				} catch (Exception e) {
+	       			e.printStackTrace();
+	       		}  
+        
+				
+		return login_result;	
 	}
 
 	 public void xpathLogin(ActionEvent event) throws IOException 
@@ -222,46 +290,8 @@ public class xpath  implements Serializable {
           
          if (continueFunction == true)
          {     	     	 
-				try { 		
-					
-					//The evaluate methods in the XPath and XPathExpression interfaces 
-					//are used to parse an XML document with XPath expressions.					
-					DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-	       			DocumentBuilder builder = factory.newDocumentBuilder();
-	       		    //Create an InputSource for the example XML document.
-	        	    //An InputSource is a input class for an XML entity.	        	    
-	       			Document document = builder.parse(new InputSource(new FileInputStream(fXmlFile)));
-	       		    //The XPathFactory class is used to create an XPath object.
-					//Create an XPathFactory object with the static newInstance method of the XPathFactory class.
-	        	    XPathFactory xPathfactory = XPathFactory.newInstance();
-	        	    //Create an XPath object from the XPathFactory object with the newXPath method.  
-	        	    XPath xpath = xPathfactory.newXPath();
-	        	    //Create and compile an XPath expression with the compile method of the XPath object. 
-	        	    //As an example, select the user ID attribute.
-	        	    //An attribute in an XPath expression is specified with an @ symbol. 
-	        	    //For further reference on XPath expressions, 
-	        	    //see the XPath specification for examples on creating an XPath expression.
-	        	    
-	          	    //The evaluate method of the XPathExpression interface evaluates
-	        	    //either an InputSource or a node/node list of the types org.w3c.dom.
-	        	    //Node, org.w3c.dom.NodeList, or org.w3c.dom.Document.
-	        	    //Evaluate the XPath expression with the InputSource of the example XML document to evaluate over.	
-	        	    	        	   	        	    
-	        	    String salt= "/Employees/Employee[UserName='" + username + "']/salt";
-	        	    XPathExpression salt_expr = xpath.compile(salt);	              	    
-	        	    String Salt_result = salt_expr.evaluate(document, XPathConstants.STRING).toString();         	 
-	        	  
-	        	    String Password = hash.hashPassword(Salt_result, password);
-	        	    
-	        	    String userID= "/Employees/Employee[UserName='" + username + "' and  Password='" + Password + "']/id";
-	        	    XPathExpression userID_expr = xpath.compile(userID);
-	        	    String userID_result = userID_expr.evaluate(document, XPathConstants.STRING).toString();
-	        	    
-	        	    String login = "/Employees/Employee[UserName='" + username + "' and  Password='" + Password + "']/Type";   	    	        	    	        	 
-	        	    XPathExpression login_expr = xpath.compile(login);
-	        	    String login_result = login_expr.evaluate(document, XPathConstants.STRING).toString(); 
-	        	    
-				 	
+				
+				 	String login_result = this.xpathconnect(fXmlFile);
 				 	if (login_result.equals(""))
 				 	{
 				 		//the connection has to be reported into the log files
@@ -289,10 +319,6 @@ public class xpath  implements Serializable {
 				 	  
 			        FacesContext.getCurrentInstance().addMessage(null, message);
 			        context.addCallbackParam("loggedIn", loggedIn);
-				 	
-				} catch (Exception e) {
-	       			e.printStackTrace();
-	       		}      	 
           }         
      }
 }
