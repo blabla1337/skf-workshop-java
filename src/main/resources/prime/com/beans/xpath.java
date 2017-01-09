@@ -319,10 +319,10 @@ public class xpath  implements Serializable {
          //Another method of avoiding XPath injections is by using variable into XPATH expression with a variable resolver enabled evaluator. 
          //See XPath parameterization example
          
-	     if (validate.validateInput(username,username,"symbols", "x-path input validation", "HIGH") == false) 
+	     if (validate.validateInput(username,username,"symbols", "x-path input validation for username", "HIGH") == false) 
 	    { continueFunction = false; }
 	     
-	     if (validate.validateInput(username,password,"symbols", "x-path input validation", "HIGH") == false) 
+	     if (validate.validateInput(username,password,"symbols", "x-path input validation for password", "HIGH") == false) 
 	    { continueFunction = false; }
 	     
 	
