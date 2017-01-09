@@ -98,7 +98,7 @@ public class AntiCSRF extends UIComponentBase {
 				Log.SetLog("", "", "antiCSRF token doesnt match! Failed attempt", null, "", "NULL"); 
 				logger.info("antiCSRF token doesnt match! Failed attempt");
 				ConfigurableNavigationHandler nav = (ConfigurableNavigationHandler) fc.getApplication().getNavigationHandler(); 
-    			nav.performNavigation("UserLogin");
+    			nav.performNavigation("Menu");
 			}
 
 		}

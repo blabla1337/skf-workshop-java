@@ -8,7 +8,7 @@
  
  <f:view contentType="text/html">  
  
-	<f:event listener="#{userLoginView.isAuthenticated}" type="preRenderView"/>
+	<f:event listener="#{userLogin.isAuthenticated}" type="preRenderView"/>
  
   <h:head>
   
@@ -41,7 +41,7 @@
     
     <div class="left_side">
     	<h:outputLabel styleClass="user_login" for="name" value="Welcome " />
-    	<h:outputText styleClass="user_login" id="name" value="#{userLoginView.username}" />
+    	<h:outputText styleClass="user_login" id="name" value="#{userLogin.username}" />
     	<p:spacer height="10" /> 
     <p:separator style="border: 0px" />
     	

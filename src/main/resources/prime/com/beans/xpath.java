@@ -184,10 +184,14 @@ public class xpath  implements Serializable {
 		username : ' or substring((//Employee[position()=1]/child::node()[position()=2]),1,1)="A" or ''='
 		password : blah
 		
-		in order to test any of the above exploit cases just comment out the input validation lines 207 and 210 below.  
+		another exploitation example is using the following query which will be true if the second string (password) of the first node (user 'Arnold') 
+		consists of 36 characters (hash).
 		
+		string-length(//user[position()=1]/child::node()[position()=2])=36 or ''='
 		
-          */
+		in order to test any of the above exploit cases just comment out the input validation lines 207 and 210 below.
+		
+        */
 		 RequestContext context = RequestContext.getCurrentInstance();
 		 FacesMessage message = null;
 	     boolean loggedIn = false;
@@ -204,11 +208,11 @@ public class xpath  implements Serializable {
          //Another method of avoiding XPath injections is by using variable into XPATH expression with a variable resolver enabled evaluator. 
          //See XPath parameterization example
          
-	     if (validate.validateInput(username,username,"symbols", "x-path input validation", "HIGH") == false) 
-	     { continueFunction = false; }
+	     //if (validate.validateInput(username,username,"symbols", "x-path input validation", "HIGH") == false) 
+	    // { continueFunction = false; }
 	     
-	     if (validate.validateInput(username,password,"symbols", "x-path input validation", "HIGH") == false) 
-	     { continueFunction = false; }
+	     //if (validate.validateInput(username,password,"symbols", "x-path input validation", "HIGH") == false) 
+	    // { continueFunction = false; }
 	     
 	
          //Only if our validation function returned true we put the user input in the function
