@@ -121,7 +121,7 @@ public class Registration {
 	        */
 		 if(length >= 21){
 	            //If length is to large the function must return false and the result must be logged.
-			    Log.SetLog(username, "Username was to long!", "FAIL!", LocalDateTime.now(), null);
+			    Log.SetLog(username, "Username was to long!", "FAIL!", LocalDateTime.now(), "");
 			    added = false ;
 	        }
 		 

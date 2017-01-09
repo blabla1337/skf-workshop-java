@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 import javax.faces.application.ConfigurableNavigationHandler;
@@ -39,10 +40,7 @@ public class UserLogin  implements Serializable {
 	final static Logger logger = Logger.getLogger(UserLogin.class);
 	private String password ;
 	private String username;
-	private int userID;
 	private String salt;
-	private String access ;
-	private int privilege;	 
 	private String password2;
 	
 	private String email;
@@ -70,7 +68,7 @@ public class UserLogin  implements Serializable {
 	}
 
 
-	public static final String AUTH_KEY = "User: ";
+	public static String AUTH_KEY = "User: ";
      
 
     public String getUsername() {
@@ -188,7 +186,7 @@ public class UserLogin  implements Serializable {
         	 origResponse.addCookie(newCookie);
         	 
         	//the connection has to be reported into the log files
-             Log.SetLog("", "", "login was OK!", null, "SUCCESS", "NULL");    
+             Log.SetLog("User: " + uname, "succesfull validation of user credentials ", "login was OK!",  LocalDateTime.now(), "SUCCESS", "");    
                 
              /*
              Put id in a session for query identifier based authentication
@@ -196,7 +194,7 @@ public class UserLogin  implements Serializable {
               */
 
              origRequest.getSession().setAttribute("userID", userId);
-             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put(AUTH_KEY, user_name);
+             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put(AUTH_KEY, uname);
             
         }
         else
@@ -256,8 +254,8 @@ public class UserLogin  implements Serializable {
         
         else if (this.isLoggedIn())
         {
-        	//if (fc.getExternalContext().getSessionMap().get(AUTH_KEY) != null)
-        		if (this.getUsername() != null)
+        	if (fc.getExternalContext().getSessionMap().get(AUTH_KEY) != null)
+        	if (this.getUsername() != null)
 	        if (!this.getUsername().equals(fc.getExternalContext().getSessionMap().get(AUTH_KEY))){
 	          ConfigurableNavigationHandler nav = (ConfigurableNavigationHandler) fc.getApplication().getNavigationHandler();        
 	          nav.performNavigation("access-denied");

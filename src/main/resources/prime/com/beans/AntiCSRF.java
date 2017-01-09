@@ -37,6 +37,7 @@ public class AntiCSRF extends UIComponentBase {
         //Set an accesor session.
         origRequest.getSession(false);
         origRequest.getSession().setAttribute("CSRF", CSRftoken);
+       
 	}
 
     public void antiCSRF() throws IOException
