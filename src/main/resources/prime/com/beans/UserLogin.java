@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
+import java.util.Scanner;
 import java.util.UUID;
 
 import javax.faces.application.ConfigurableNavigationHandler;
@@ -24,10 +25,8 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
-
 import org.apache.log4j.Logger;
 import org.primefaces.context.RequestContext;
-
 import com.Lib.AuditLog;
 import com.Lib.hashing;
 import com.Lib.inputvalidation;
@@ -39,25 +38,12 @@ public class UserLogin  implements Serializable {
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = Logger.getLogger(UserLogin.class);
 	private String password ;
-	private String username;
+	//private static Scanner scanner = new Scanner(System.in);
+    public static String username ;
 	private String salt;
-	private String password2;
-	
-	private String email;
-	
-	public String Sessiontoken ;
-	
+	private String AUTH_KEY = "User: ";
+	private String email;		
 	private String token;
-	
-	
-
-	public String getPassword2() {
-		return password2;
-	}
-
-	public void setPassword2(String password2) {
-		this.password2 = password2;
-	}
 
 	public String getEmail() {
 		return email;
@@ -67,16 +53,12 @@ public class UserLogin  implements Serializable {
 		this.email = email;
 	}
 
-
-	public static String AUTH_KEY = "User: ";
-     
-
     public String getUsername() {
         return username;
     }
  
     public void setUsername(String username) {
-        this.username = username;
+        UserLogin.username = username;
     }
  
     public String getPassword() {
@@ -87,16 +69,10 @@ public class UserLogin  implements Serializable {
         this.password = password;
     }
     
-    public String getSessiontoken() {
-		
-		return Sessiontoken;
-	}
-	public void setSessiontoken(String sessiontoken) {
-		Sessiontoken = sessiontoken;
-	}
 	public String getToken() {
 		return token;
 	}
+	
 	public void setToken(String token) {
 		this.token = token;
 	}
@@ -116,11 +92,8 @@ public class UserLogin  implements Serializable {
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put(AUTH_KEY, username);
         FacesMessage message = null;
         boolean loggedIn = false;
-        String user_name = ""; 
-        
+        String user_name = "";         
         String uname = this.getUsername(); 
-        
-        
         String passwordHash = "";
         String userId = "";
 
@@ -136,12 +109,11 @@ public class UserLogin  implements Serializable {
 		 DataSource ds = (DataSource)webContext.lookup("jdbc/login_Jdbc");
 		 conn = ds.getConnection();	
 
-		 //Here we select the user from the users table
+		  //Here we select the user from the users table
 	      String query = "SELECT * from users WHERE username = ?";
 	   
 	      PreparedStatement st = conn.prepareStatement(query);
-	      st.setString(1, uname);
-	      
+	      st.setString(1, uname); 
 	      //execute the query, and get a java result set
 	      //We bind the parameter in order to prevent SQL injections
 
@@ -166,6 +138,7 @@ public class UserLogin  implements Serializable {
         We validate the password see "Password storage(salting stretching hashing)" in the code examples
         for more detailed information:
         */
+	    
         if (hash.Validate(passwordHash, salt, password) == true)
         {
         	/*
@@ -180,21 +153,25 @@ public class UserLogin  implements Serializable {
         	 //initiate a session
         	 origRequest.getSession(true);
         	 origRequest.getSession().setAttribute("AuthToken", randomUUIDString);     	
-        	// now create a new cookie with this UUID value
+        	 
+        	 //now create a new cookie with this UUID value
+        	 
+        	 /*
+             Put id in a session for query identifier based authentication
+             See "identifier based authentication" code example for more information
+              */
+        	 
+             origRequest.getSession().setAttribute("userID", userId);
+
         	 Cookie newCookie = new Cookie("AuthToken", randomUUIDString);   
         	 
         	 origResponse.addCookie(newCookie);
         	 
         	//the connection has to be reported into the log files
              Log.SetLog("User: " + uname, "succesfull validation of user credentials ", "login was OK!",  LocalDateTime.now(), "SUCCESS", "");    
-                
-             /*
-             Put id in a session for query identifier based authentication
-             See "identifier based authentication" code example for more information
-              */
 
-             origRequest.getSession().setAttribute("userID", userId);
-             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put(AUTH_KEY, uname);
+             //FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put(AUTH_KEY, uname);
+             origRequest.getSession().setAttribute(AUTH_KEY, uname);
             
         }
         else
@@ -254,6 +231,10 @@ public class UserLogin  implements Serializable {
         
         else if (this.isLoggedIn())
         {
+        	//username = scanner.nextLine();
+			String unames = username;
+        	String authkey = (String) fc.getExternalContext().getSessionMap().get(AUTH_KEY); 
+        	
         	if (fc.getExternalContext().getSessionMap().get(AUTH_KEY) != null)
         	if (this.getUsername() != null)
 	        if (!this.getUsername().equals(fc.getExternalContext().getSessionMap().get(AUTH_KEY))){
