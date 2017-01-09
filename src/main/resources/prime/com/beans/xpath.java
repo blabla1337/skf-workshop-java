@@ -170,6 +170,21 @@ public class xpath  implements Serializable {
 						      <Type>User</Type>
 						   </Employee>
 						</Employees>
+						
+						
+		How to exploit : 
+		
+		With a normal username and password this XPath would work, but an attacker may send a bad username and password and get an XML node selected without knowing the username or password, like this:
+		
+		Username: blah' or 1=1 or 'a'='a
+		Password: blah
+
+		or if the following exploit used, it matches the first letter of the username which is A. In such case it just ignores the password and permits login. 
+		
+		username : ' or substring((//Employee[position()=1]/child::node()[position()=2]),1,1)="A" or ''='
+		password : blah
+		
+		
           */
 		 RequestContext context = RequestContext.getCurrentInstance();
 		 FacesMessage message = null;
