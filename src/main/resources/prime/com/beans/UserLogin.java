@@ -270,10 +270,10 @@ public class UserLogin  implements Serializable {
         	String authkey = (String) fc.getExternalContext().getSessionMap().get(AUTH_KEY); 
         	boolean connect_db = this.dbconnection(authkey, "jdbc/login_Jdbc","java:/comp/env");
         	File fXmlFile = new File("C:\\xmldb\\users.xml");
-        	String login_xpath = x.xpathconnect(fXmlFile);
+        	String login_xpath = x.checkuser(fXmlFile,authkey);
         	
         	if (fc.getExternalContext().getSessionMap().get(AUTH_KEY) != null)
-	        if (connect_db != true || login_xpath.equals("")){
+	        if ( (connect_db != true && login_xpath.equals("")) || (connect_db == true && !login_xpath.equals(""))){
 	          ConfigurableNavigationHandler nav = (ConfigurableNavigationHandler) fc.getApplication().getNavigationHandler();        
 	          nav.performNavigation("access-denied");
 	        }

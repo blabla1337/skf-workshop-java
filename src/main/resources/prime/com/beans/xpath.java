@@ -148,7 +148,50 @@ public class xpath  implements Serializable {
 		
 	}
 	
-	public String xpathconnect(File fXmlFile){
+	//the following function used to check if the user exists 
+	
+	public String checkuser(File fXmlFile,String usrname){
+		
+		String type_result = null;
+		    	     	 
+				try { 
+					//The evaluate methods in the XPath and XPathExpression interfaces 
+					//are used to parse an XML document with XPath expressions.					
+					DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+	       			DocumentBuilder builder = factory.newDocumentBuilder();
+	       		    //Create an InputSource for the example XML document.
+	        	    //An InputSource is a input class for an XML entity.	        	    
+	       			Document document = builder.parse(new InputSource(new FileInputStream(fXmlFile)));
+	       		    //The XPathFactory class is used to create an XPath object.
+					//Create an XPathFactory object with the static newInstance method of the XPathFactory class.
+	        	    XPathFactory xPathfactory = XPathFactory.newInstance();
+	        	    //Create an XPath object from the XPathFactory object with the newXPath method.  
+	        	    XPath xpath = xPathfactory.newXPath();
+	        	    //Create and compile an XPath expression with the compile method of the XPath object. 
+	        	    //As an example, select the user ID attribute.
+	        	    //An attribute in an XPath expression is specified with an @ symbol. 
+	        	    //For further reference on XPath expressions, 
+	        	    //see the XPath specification for examples on creating an XPath expression.
+	        	    
+	          	    //The evaluate method of the XPathExpression interface evaluates
+	        	    //either an InputSource or a node/node list of the types org.w3c.dom.
+	        	    //Node, org.w3c.dom.NodeList, or org.w3c.dom.Document.
+	        	    //Evaluate the XPath expression with the InputSource of the example XML document to evaluate over.
+	
+					String type= "/Employees/Employee[UserName='" + usrname + "']/Type";
+				    XPathExpression salt_expr = xpath.compile(type);	              	    
+				    type_result = salt_expr.evaluate(document, XPathConstants.STRING).toString();  
+	    
+					} catch (Exception e) {
+		       			e.printStackTrace();
+		       		}  
+	        
+					
+			return type_result;	
+		}
+
+	
+	public String xpathconnect(File fXmlFile,String usrname){
 		
 		String login_result = null;
 		    	     	 
@@ -176,7 +219,7 @@ public class xpath  implements Serializable {
 	        	    //Node, org.w3c.dom.NodeList, or org.w3c.dom.Document.
 	        	    //Evaluate the XPath expression with the InputSource of the example XML document to evaluate over.	
 	        	    	        	   	        	    
-	        	    String salt= "/Employees/Employee[UserName='" + username + "']/salt";
+	        	    String salt= "/Employees/Employee[UserName='" + usrname + "']/salt";
 	        	    XPathExpression salt_expr = xpath.compile(salt);	              	    
 	        	    String Salt_result = salt_expr.evaluate(document, XPathConstants.STRING).toString();         	 
 	        	  
@@ -291,7 +334,7 @@ public class xpath  implements Serializable {
          if (continueFunction == true)
          {     	     	 
 				
-				 	String login_result = this.xpathconnect(fXmlFile);
+				 	String login_result = this.xpathconnect(fXmlFile,username);
 				 	if (login_result.equals(""))
 				 	{
 				 		//the connection has to be reported into the log files
