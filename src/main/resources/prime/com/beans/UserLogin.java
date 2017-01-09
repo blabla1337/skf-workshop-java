@@ -9,7 +9,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
-import java.util.Scanner;
 import java.util.UUID;
 
 import javax.faces.application.ConfigurableNavigationHandler;
@@ -26,8 +25,10 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
+
 import org.apache.log4j.Logger;
 import org.primefaces.context.RequestContext;
+
 import com.Lib.AuditLog;
 import com.Lib.hashing;
 import com.Lib.inputvalidation;
@@ -39,7 +40,6 @@ public class UserLogin  implements Serializable {
 	private static final long serialVersionUID = 1L;
 	final static Logger logger = Logger.getLogger(UserLogin.class);
 	private String password ;
-	//private static Scanner scanner = new Scanner(System.in);
     public static String username ;
     public String passwordHash;
     public String userId;
@@ -212,7 +212,7 @@ public class UserLogin  implements Serializable {
         else
         {
             //the connection has to be reported into the log files
-            Log.SetLog("", "null", "Login failed!", null, "FAIL", "NULL");
+            Log.SetLog("User: " + username, "", "Login failed!", LocalDateTime.now() , "FAIL", "NULL");
             message = new FacesMessage(FacesMessage.SEVERITY_WARN, "Loggin Error", "Invalid credentials");  
             FacesContext.getCurrentInstance().getExternalContext().redirect("UserLogin.xhtml");
         }	

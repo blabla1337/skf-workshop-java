@@ -13,6 +13,7 @@ import org.apache.log4j.Logger;
 import com.Lib.AuditLog;
 import com.Lib.randomizer;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.Map;
 
 @FacesComponent(value = "Prime.com.beans.AntiCSRF")
@@ -59,7 +60,7 @@ public class AntiCSRF extends UIComponentBase {
 	   				cookie.setValue(null);	       		
 	   				origResponse.addCookie(cookie);
 	   			
-	                Log.SetLog("", "", "Cookie has been desroyed!", null, "", "NULL");    
+	                Log.SetLog("", "", "Cookie has been desroyed!", LocalDateTime.now(), "", "");    
    				} 
    		}		     
     }
@@ -83,7 +84,7 @@ public class AntiCSRF extends UIComponentBase {
 				} catch (IOException e) {
 					logger.error(e.toString());
 				}
-				Log.SetLog("", "", "antiCSRF token doesnt match! Failed attempt", null, "", "NULL"); 
+				Log.SetLog("", "", "antiCSRF token doesnt match! Failed attempt", LocalDateTime.now(), "", ""); 
 				logger.info("antiCSRF token doesnt match! Failed attempt");
 				ConfigurableNavigationHandler nav = (ConfigurableNavigationHandler) fc.getApplication().getNavigationHandler(); 
     			nav.performNavigation("csrf");
@@ -96,7 +97,7 @@ public class AntiCSRF extends UIComponentBase {
 				} catch (IOException e) {
 					logger.error(e.toString());
 				}
-				Log.SetLog("", "", "antiCSRF token doesnt match! Failed attempt", null, "", "NULL"); 
+				Log.SetLog("", "", "antiCSRF token doesnt match! Failed attempt", LocalDateTime.now(), "", ""); 
 				logger.info("antiCSRF token doesnt match! Failed attempt");
 				ConfigurableNavigationHandler nav = (ConfigurableNavigationHandler) fc.getApplication().getNavigationHandler(); 
     			nav.performNavigation("Menu");
