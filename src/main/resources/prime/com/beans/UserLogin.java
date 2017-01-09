@@ -40,6 +40,8 @@ public class UserLogin  implements Serializable {
 	private String password ;
 	//private static Scanner scanner = new Scanner(System.in);
     public static String username ;
+    public String passwordHash;
+    public String userId;
 	private String salt;
 	private String AUTH_KEY = "User: ";
 	private String email;		
@@ -77,30 +79,10 @@ public class UserLogin  implements Serializable {
 		this.token = token;
 	}
 	   
-    public void login(ActionEvent event) throws IOException {
-    	//First we include the audit log class.
-    	AuditLog Log = new AuditLog();
-    		
-    	//Second we include the password hash.
-    	hashing hash = new hashing();
-
-    	//Last we include the random input validation class.
-        inputvalidation validate = new inputvalidation();
-        RequestContext context = RequestContext.getCurrentInstance();
-        HttpServletRequest origRequest = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
-        HttpServletResponse origResponse = (HttpServletResponse)FacesContext.getCurrentInstance().getExternalContext().getResponse();
-        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put(AUTH_KEY, username);
-        FacesMessage message = null;
-        boolean loggedIn = false;
-        String user_name = "";         
-        String uname = this.getUsername(); 
-        String passwordHash = "";
-        String userId = "";
-
-        //we also validate the username input, if it was bad we empty the string:
-        if (validate.validateInput(username, username, "alphanumeric", "LOW", "0") != true) { username = ""; }
-     
-    	//Here we connect to the database by means of a connection string as configured in the web.xml and /META-INF/context.xml  
+	public boolean dbconnection(String uname, String datasource, String initcontext){
+		
+		boolean connect  = false ; 
+		 
         Connection conn = null;
 	    try {
 			
@@ -121,10 +103,11 @@ public class UserLogin  implements Serializable {
 	      
 	      while (rs.next())
 	      {
-	    	  user_name   = rs.getString("username");
-	    	  passwordHash = rs.getString("password");
-              salt = rs.getString("salt");
-              userId = rs.getString("userID");
+	    	  this.setUsername(rs.getString("username"));
+	    	  this.setPasswordHash(rs.getString("password"));
+              this.setSalt(rs.getString("salt"));
+              this.setUserId(rs.getString("userID"));
+              connect = true ; 
 	      }
 	      
 	      st.close();
@@ -133,13 +116,65 @@ public class UserLogin  implements Serializable {
 		} catch (SQLException | NamingException e) {
 			 logger.error("cannot search database. check query" + e.toString() );
 		}
+		return connect ;
+		
+	}
+    public String getSalt() {
+		return salt;
+	}
+
+	public void setSalt(String salt) {
+		this.salt = salt;
+	}
+
+	public String getPasswordHash() {
+		return passwordHash;
+	}
+
+	public void setPasswordHash(String passwordHash) {
+		this.passwordHash = passwordHash;
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
+	public void login(ActionEvent event) throws IOException {
+    	//First we include the audit log class.
+    	AuditLog Log = new AuditLog();
+    		
+    	//Second we include the password hash.
+    	hashing hash = new hashing();
+
+    	//Last we include the random input validation class.
+        inputvalidation validate = new inputvalidation();
+        RequestContext context = RequestContext.getCurrentInstance();
+        HttpServletRequest origRequest = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        HttpServletResponse origResponse = (HttpServletResponse)FacesContext.getCurrentInstance().getExternalContext().getResponse();
+        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put(AUTH_KEY, username);
+        FacesMessage message = null;
+        boolean loggedIn = false;
+        String user_name = "";         
+        String uname = this.getUsername(); 
+       
+        String userId = "";
+
+        //we also validate the username input, if it was bad we empty the string:
+        if (validate.validateInput(username, username, "alphanumeric", "LOW", "0") != true) { username = ""; }
+     
+        //Here we connect to the database by means of a connection string as configured in the web.xml and /META-INF/context.xml 
+	    boolean connect = this.dbconnection(uname,"jdbc/login_Jdbc","java:/comp/env");
 	    
 	    /*
         We validate the password see "Password storage(salting stretching hashing)" in the code examples
         for more detailed information:
         */
-	    
-        if (hash.Validate(passwordHash, salt, password) == true)
+	    if (connect == true)
+        if (hash.Validate(this.getPasswordHash(), this.getSalt(), password) == true)
         {
         	/*
             This is is to prevent session fixation, after login we create a new cookie which
@@ -170,7 +205,6 @@ public class UserLogin  implements Serializable {
         	//the connection has to be reported into the log files
              Log.SetLog("User: " + uname, "succesfull validation of user credentials ", "login was OK!",  LocalDateTime.now(), "SUCCESS", "");    
 
-             //FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put(AUTH_KEY, uname);
              origRequest.getSession().setAttribute(AUTH_KEY, uname);
             
         }
@@ -231,13 +265,11 @@ public class UserLogin  implements Serializable {
         
         else if (this.isLoggedIn())
         {
-        	//username = scanner.nextLine();
-			String unames = username;
         	String authkey = (String) fc.getExternalContext().getSessionMap().get(AUTH_KEY); 
+        	boolean connect_db = this.dbconnection(authkey, "jdbc/login_Jdbc","java:/comp/env");
         	
         	if (fc.getExternalContext().getSessionMap().get(AUTH_KEY) != null)
-        	if (this.getUsername() != null)
-	        if (!this.getUsername().equals(fc.getExternalContext().getSessionMap().get(AUTH_KEY))){
+	        if (connect_db == false){
 	          ConfigurableNavigationHandler nav = (ConfigurableNavigationHandler) fc.getApplication().getNavigationHandler();        
 	          nav.performNavigation("access-denied");
 	        }
