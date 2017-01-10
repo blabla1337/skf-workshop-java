@@ -39,9 +39,9 @@ public class FileUploader {
         UserLogin usr = new UserLogin();
         
         //suppose we got the user ID from the user name of the logged in user. 
-        //For the purposes of this demo we assume that the logged in user is Admin 
+        //For the purposes of this demo we assume that the logged in user is admin 
         
-        String userID = usr.UserIDfromDB("Admin","jdbc/login_Jdbc","java:/comp/env");
+        String userID = usr.UserIDfromDB("admin","jdbc/login_Jdbc","java:/comp/env");
         
         boolean continueFunction = true;
         boolean sessiontermination = false;
