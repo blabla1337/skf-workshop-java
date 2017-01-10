@@ -25,7 +25,7 @@ import com.Lib.inputvalidation;
 @ManagedBean(name="fileUploadController")
 public class FileUploader {
 	
-   private String destination="C:\\Users\\xvassilakopoulos\\Desktop\\test\\";
+   private String destination="C:\\test";
    private final static Logger LOGGER = Logger.getLogger(FileUploader.class.getCanonicalName());
    private AuditLog Log = new AuditLog(); 
    inputvalidation validate = new inputvalidation();
