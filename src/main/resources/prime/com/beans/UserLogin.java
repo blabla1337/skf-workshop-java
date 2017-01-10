@@ -1,6 +1,5 @@
 package prime.com.beans;
 
-
 import java.io.File;
 import java.io.IOException;
 import java.io.Serializable;
@@ -79,6 +78,47 @@ public class UserLogin  implements Serializable {
 	public void setToken(String token) {
 		this.token = token;
 	}
+	
+	public String UserIDfromDB(String uname, String datasource, String initcontext){
+		
+		String connect  = "" ; 
+		 
+        Connection conn = null;
+	    try {
+			
+		 Context initContext = new InitialContext();
+		 Context webContext  = (Context)initContext.lookup(initcontext);
+		 DataSource ds = (DataSource)webContext.lookup(datasource);
+		 conn = ds.getConnection();	
+
+		  //Here we select the user from the users table
+	      String query = "SELECT * from users WHERE username = ?";
+	   
+	      PreparedStatement st = conn.prepareStatement(query);
+	      st.setString(1, uname); 
+	      //execute the query, and get a java result set
+	      //We bind the parameter in order to prevent SQL injections
+
+	      ResultSet rs = st.executeQuery();
+	      
+	      while (rs.next())
+	      {
+	    	  this.setUsername(rs.getString("username"));
+	    	  this.setPasswordHash(rs.getString("password"));
+              this.setSalt(rs.getString("salt"));
+              this.setUserId(rs.getString("userID"));
+              connect = this.getUserId() ; 
+	      }
+	      
+	      st.close();
+	      conn.close();
+	    
+		} catch (SQLException | NamingException e) {
+			 logger.error("cannot search database. check query" + e.toString() );
+		}
+		return connect ;
+		
+	}
 	   
 	public boolean dbconnection(String uname, String datasource, String initcontext){
 		
@@ -88,8 +128,8 @@ public class UserLogin  implements Serializable {
 	    try {
 			
 		 Context initContext = new InitialContext();
-		 Context webContext  = (Context)initContext.lookup("java:/comp/env");
-		 DataSource ds = (DataSource)webContext.lookup("jdbc/login_Jdbc");
+		 Context webContext  = (Context)initContext.lookup(initcontext);
+		 DataSource ds = (DataSource)webContext.lookup(datasource);
 		 conn = ds.getConnection();	
 
 		  //Here we select the user from the users table
