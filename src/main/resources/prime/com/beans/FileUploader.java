@@ -10,22 +10,18 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-
 import org.apache.commons.io.FilenameUtils;
 import org.primefaces.event.FileUploadEvent;
-
 import com.Lib.AuditLog;
 import com.Lib.WinRegistry;
 import com.Lib.inputvalidation;
 
- 
 @ManagedBean(name="fileUploadController")
 public class FileUploader {
 	
@@ -39,9 +35,14 @@ public class FileUploader {
         FacesContext context = FacesContext.getCurrentInstance();
         HttpServletRequest origRequest = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
         FacesContext.getCurrentInstance().getExternalContext().setResponseContentType("text/html;charset=UTF-8");
-
         
-        String userID = "2";
+        UserLogin usr = new UserLogin();
+        
+        //suppose we got the user ID from the user name of the logged in user. 
+        //For the purposes of this demo we assume that the logged in user is Admin 
+        
+        String userID = usr.UserIDfromDB("Admin","jdbc/login_Jdbc","java:/comp/env");
+        
         boolean continueFunction = true;
         boolean sessiontermination = false;
         boolean blockaccess = false ;
