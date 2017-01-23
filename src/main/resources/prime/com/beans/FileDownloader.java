@@ -11,7 +11,6 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import javax.faces.bean.ManagedBean;
 import javax.faces.component.UIComponent;
 import javax.faces.context.ExternalContext;
@@ -24,10 +23,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import javax.sql.DataSource;
-
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
-
 import com.Lib.AuditLog;
 import com.Lib.inputvalidation;
 import com.Lib.whitelist;
@@ -40,27 +37,28 @@ public class FileDownloader {
 	private whitelist wl = new whitelist();
 	inputvalidation validate = new inputvalidation();
 	private UIComponent component;
-    private StreamedContent f;
+    private StreamedContent file;
     
-    public void fileDownloadView() throws IOException {        
+    public FileDownloader() throws IOException {        
     
     	FacesContext context = FacesContext.getCurrentInstance();
-         HttpServletRequest request = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
-         HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
-         FacesContext.getCurrentInstance().getExternalContext().setResponseContentType("text/html;charset=UTF-8");
+        HttpServletRequest request = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+        FacesContext.getCurrentInstance().getExternalContext().setResponseContentType("text/html;charset=UTF-8");
         
         response.setContentType("text/html;charset=UTF-8");
         String action = ""; 
         boolean proceed = false ;
         String mimetype = "";
+        
 		 // Create path components to save the file
-        // The location of stored files should always be outside of your root
-         InputStream stream = FacesContext.getCurrentInstance().getExternalContext().getResourceAsStream("/resources/images/optimus.jpg");
-         f = new DefaultStreamedContent(stream, "image/jpg", "downloaded_optimus.jpg");
+         // The location of stored files should always be outside of your root
+         InputStream stream = FacesContext.getCurrentInstance().getExternalContext().getResourceAsStream("/resources/images/admin.png");
+         file = new DefaultStreamedContent(stream, "image/jpg", "downloaded.jpg");
 
         Part filePart = null;
 		try {
-			filePart = request.getPart(f.toString());
+			filePart = request.getPart(file.toString());
 		} catch (IOException | ServletException e1) {
 			LOGGER.log(Level.SEVERE, "cannot update database. check query = {0}", e1.toString());
 		}
@@ -201,7 +199,15 @@ public class FileDownloader {
 		}
 	}
 	
-	 public void fixedDownloads(String file, String download, HttpServletResponse response)
+	 public StreamedContent getFile() {
+		return file;
+	}
+
+	public void setFile(StreamedContent file) {
+		this.file = file;
+	}
+
+	public void fixedDownloads(String file, String download, HttpServletResponse response)
      {
 		 
 		 /*
