@@ -1,5 +1,6 @@
 package prime.com.beans;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -37,7 +38,7 @@ public class FileDownloader {
 	private whitelist wl = new whitelist();
 	inputvalidation validate = new inputvalidation();
 	private UIComponent component;
-    private StreamedContent file;
+    private DefaultStreamedContent file;
     
     public FileDownloader() throws IOException {        
     
@@ -55,16 +56,9 @@ public class FileDownloader {
          // The location of stored files should always be outside of your root
          InputStream stream = FacesContext.getCurrentInstance().getExternalContext().getResourceAsStream("/resources/images/admin.png");
          file = new DefaultStreamedContent(stream, "image/jpg", "downloaded.jpg");
+         
+         String fileName = file.getName();
 
-        Part filePart = null;
-		try {
-			filePart = request.getPart(file.toString());
-		} catch (IOException | ServletException e1) {
-			LOGGER.log(Level.SEVERE, "cannot update database. check query = {0}", e1.toString());
-		}
-        //We get the filename for doing different types of tests on it
-        final String fileName = getFileName(filePart);
-      
         /*
         First we check if the value is alphanumeric only to prevent uploading out of intended directory, 
         as well as other injections
@@ -204,7 +198,7 @@ public class FileDownloader {
 	}
 
 	public void setFile(StreamedContent file) {
-		this.file = file;
+		this.file = (DefaultStreamedContent) file;
 	}
 
 	public void fixedDownloads(String file, String download, HttpServletResponse response)
