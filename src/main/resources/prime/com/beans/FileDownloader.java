@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -31,7 +32,8 @@ import com.Lib.AuditLog;
 import com.Lib.inputvalidation;
 import com.Lib.whitelist;
  
-@ManagedBean
+
+@ManagedBean(name="fileDownloadController")
 @MultipartConfig
 public class FileDownloader {
      
@@ -61,20 +63,12 @@ public class FileDownloader {
         
         fileplace = new File(file); 
         
-        Part filePart = null;
- 		try {
-			filePart = request.getPart("file");
-		} catch (IOException | ServletException e1) {
-			// TODO Auto-generated catch block
-			LOGGER.log(Level.SEVERE, "Error in file part = {0}", e1.toString());
-		}
- 		
- 		
- 		//We get the filename for doing different types of tests on it
-        final String fileName = getFileName(filePart);
-      
-         
-         
+        
+        String fileNameformat = fileplace.getName();
+        
+        String filenameparts[] = fileNameformat.split(Pattern.quote("."));
+        String fileName = filenameparts[0];
+        String afterdot = filenameparts[1];
          
         /*
         First we check if the value is alphanumeric only to prevent uploading out of intended directory, 
@@ -159,7 +153,7 @@ public class FileDownloader {
         	response.reset();
         	response.setContentType(mimetype);
         	response.addHeader("Cache-Control", "no-cache");
-        	response.addHeader("Content-Disposition", "attachment; filename=" + fileName + ";");
+        	response.addHeader("Content-Disposition", "attachment; filename=" + fileName + "." + afterdot + ";");
         	
         	OutputStream out;
 			try {
@@ -204,8 +198,7 @@ public class FileDownloader {
 		    
 		}
 		if (action.equals("block"))
-		{
-			 
+		{ 
 			 request.getSession().invalidate();		     
 			 context.addMessage(component.getClientId(), new FacesMessage(FacesMessage.SEVERITY_ERROR, "FAIL!", "Session terminated with Blocked Access! file has not been downloaded"));
 		}
@@ -265,20 +258,5 @@ public class FileDownloader {
 		 
      }
 	
-	 private String getFileName(final Part part)
-	 {
-	         final String partHeader = part.getHeader("content-disposition");
-	         LOGGER.log(Level.INFO, "Part Header = {0}", partHeader);
-	         
-	         for (String content : part.getHeader("content-disposition").split(";"))
-	         {
-	             if (content.trim().startsWith("filename"))
-	             {
-	                 return content.substring(content.indexOf('=') + 1).trim().replace("\"", "");
-	             }
-	         }
-	         
-	         return null;
-	 } 
  
 }

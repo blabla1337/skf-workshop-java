@@ -2,6 +2,7 @@
     xmlns:h="http://java.sun.com/jsf/html"
     xmlns:f="http://java.sun.com/jsf/core"
     xmlns:p="http://primefaces.org/ui"
+    xmlns:pe="http://primefaces.org/ui/extensions"
     xmlns:ui="http://java.sun.com/jsf/facelets">
 
 <f:view contentType="text/html">
@@ -20,15 +21,21 @@
       	<img src="resources/images/skf.png"></img>
       </div>
                 
-      
       <div id="content">
          <ui:insert name="content" >
            <ui:include src="commonContentDirectoryPathTraversal.xhtml" />
          </ui:insert>
 
+ 
+<h:form enctype="multipart/form-data">
+    <p:growl id="messages" showDetail="true" />
+ 
+    <p:fileUpload value="#{fileUploader.file}" mode="simple" skinSimple="true"/>
+ 
+    <p:commandButton value="Submit" ajax="false" actionListener="#{fileUploadView.upload}" disabled="false" />
+</h:form>
 
 
-    
     </div>
     
      <div id="footer">
@@ -36,8 +43,7 @@
           <ui:include src="commonFooter.xhtml" />
         </ui:insert>
       </div>
-    
-    
+
 </div>
   </h:body>
   </f:view>

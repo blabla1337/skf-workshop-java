@@ -30,12 +30,25 @@
 		</p:dialog>
 		 
 		<h:form>
-		    <p:commandButton value="Download" ajax="false" onclick="PrimeFaces.monitorDownload(start, stop);" icon="ui-icon-arrowthick-1-s">
-		        <p:fileDownload value="#{fileDownloadView.file}" />
+		    <p:commandButton value="Download" ajax="false" actionListener="#{fileDownloadController.filedownload}" onclick="PrimeFaces.monitorDownload(start, stop);" icon="ui-icon-arrowthick-1-s">
+		        
 		    </p:commandButton>
 		    <p:spacer width="20" height="40" />
 			<p:commandButton action="#{navigationController.moveToMainMenu}" ajax="false" value="Main Menu" />
+			
+			
 		</h:form>
+		
+		<script type="text/javascript">
+				function start() {
+				    PF('statusDialog').show();
+				}
+				 
+				function stop() {
+				    PF('statusDialog').hide();
+				}
+		</script>
+	   
 	   </div>
 </h:body>
 </f:view>

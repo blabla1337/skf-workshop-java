@@ -41,7 +41,6 @@ public class FileUploader {
         //suppose we got the user ID from the user name of the logged in user. 
         //For the purposes of this demo we assume that the logged in user is admin 
         
-        
         String userID = usr.UserIDfromDB("admin","jdbc/login_Jdbc","java:/comp/env");
         
         boolean continueFunction = true;
@@ -138,7 +137,7 @@ public class FileUploader {
  
 			if (mimeType == null || !mimeType.equals("image/jpeg"))
        	   {
-       		  //If the mimetype is not valid we delete the file from the system.
+       		  //If the mime type is not valid we delete the file from the system.
 				
 			  f.deleteOnExit();
        		  continueFunction = false;

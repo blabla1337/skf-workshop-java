@@ -24,9 +24,11 @@ public class inputvalidation {
     		 validator = "(.*)(\\W+)(\\D+)(\\s+)(.*)";
 		 }
 		 else if (type.equals("alphanummeric"))		 
-			 validator = "^[A-Z0-9]+$";  		 
+			 //validator = "^[A-Z0-9]+$";
+    	 		validator = "(\\d+)(\\w+)";
 		 else if (type.equals("nummeric"))
-			 validator = "^[0-9]*$";
+			// validator = "^[0-9]*$";
+			 validator = "(.*)(\\D+)(.*)";
 		 else
 			 validator = "";
 
