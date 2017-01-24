@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.component.UIComponent;
 import javax.faces.context.ExternalContext;
@@ -20,6 +21,7 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
@@ -30,6 +32,7 @@ import com.Lib.inputvalidation;
 import com.Lib.whitelist;
  
 @ManagedBean
+@MultipartConfig
 public class FileDownloader {
      
 	private final static Logger LOGGER = Logger.getLogger(FileUploader.class.getCanonicalName());
@@ -40,8 +43,9 @@ public class FileDownloader {
     private String file;
     private File fileplace;
     
-    public FileDownloader() throws IOException {        
-    
+    public FileDownloader() {        
+    	
+    	FacesContext context = FacesContext.getCurrentInstance();
         HttpServletRequest request = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
         HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
         FacesContext.getCurrentInstance().getExternalContext().setResponseContentType("text/html;charset=UTF-8");
@@ -59,11 +63,11 @@ public class FileDownloader {
         
         Part filePart = null;
  		try {
- 			filePart = request.getPart(file);
- 		} catch (IOException | ServletException e1) {
- 			
- 			e1.printStackTrace();
- 		}
+			filePart = request.getPart("file");
+		} catch (IOException | ServletException e1) {
+			// TODO Auto-generated catch block
+			LOGGER.log(Level.SEVERE, "Error in file part = {0}", e1.toString());
+		}
  		
  		
  		//We get the filename for doing different types of tests on it
@@ -186,28 +190,29 @@ public class FileDownloader {
 			 request.getSession().invalidate();
 	    	 request.setAttribute("msg","Session terminated! file has not been downloaded");		     
 		     ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
-		     ec.redirect(ec.getRequestContextPath() + "/Menu.xhtml");
+		     try {
+				ec.redirect(ec.getRequestContextPath() + "/Menu.xhtml");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				LOGGER.log(Level.SEVERE, "Cannot redirect = {0}", e.toString());
+			}
 		}
 		if (action.equals("validation failed"))
 		{
 			 request.getSession().invalidate();
-	    	 request.setAttribute("msg","Session terminated! file has not been downloaded");		     
-		     ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
-		     ec.redirect(ec.getRequestContextPath() + "/download.xhtml");
+	    	 context.addMessage(component.getClientId(), new FacesMessage(FacesMessage.SEVERITY_ERROR, "FAIL!", "Session terminated! file has not been downloaded"));
+		    
 		}
 		if (action.equals("block"))
 		{
 			 
-			 request.getSession().invalidate();
-			 request.setAttribute("msg","Access Blocked! file has not been downloaded");		     
-		     ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
-		     ec.redirect(ec.getRequestContextPath() + "/Menu.xhtml");
+			 request.getSession().invalidate();		     
+			 context.addMessage(component.getClientId(), new FacesMessage(FacesMessage.SEVERITY_ERROR, "FAIL!", "Session terminated with Blocked Access! file has not been downloaded"));
 		}
 		if (action.equals("Validated Successfully"))
 		{
-			request.setAttribute("msg","SUCCESS! file downloaded");		     
-		     ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
-		     ec.redirect(ec.getRequestContextPath() + "/Menu.xhtml");
+    
+			context.addMessage(component.getClientId(), new FacesMessage(FacesMessage.SEVERITY_ERROR, "SUCCESS!", "file downloaded"));
 		     
 		}
 	}
