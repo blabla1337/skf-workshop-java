@@ -3,7 +3,6 @@ package prime.com.beans;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,6 +11,7 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javax.faces.bean.ManagedBean;
 import javax.faces.component.UIComponent;
 import javax.faces.context.ExternalContext;
@@ -24,8 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import javax.sql.DataSource;
-import org.primefaces.model.DefaultStreamedContent;
-import org.primefaces.model.StreamedContent;
+
 import com.Lib.AuditLog;
 import com.Lib.inputvalidation;
 import com.Lib.whitelist;
@@ -38,16 +37,14 @@ public class FileDownloader {
 	private whitelist wl = new whitelist();
 	inputvalidation validate = new inputvalidation();
 	private UIComponent component;
-    private File file;
+    private String file;
+    private File fileplace;
     
     public FileDownloader() throws IOException {        
     
-    	FacesContext context = FacesContext.getCurrentInstance();
         HttpServletRequest request = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
         HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
         FacesContext.getCurrentInstance().getExternalContext().setResponseContentType("text/html;charset=UTF-8");
-        
-        response.setContentType("text/html;charset=UTF-8");
         
         String action = ""; 
         boolean proceed = false ;
@@ -55,12 +52,24 @@ public class FileDownloader {
         
 		 // Create path components to save the file
          // The location of stored files should always be outside of your root
-         //InputStream stream = FacesContext.getCurrentInstance().getExternalContext().getResourceAsStream("/resources/images/admin.png");
-         //file = new DefaultStreamedContent(stream, "image/jpg", "downloaded.jpg");
          
-         file = new File("C:\\Users\\xvassilakopoulos\\Desktop\\test\\tsec.jpg");
+        file = "C:\\Users\\xvassilakopoulos\\Desktop\\test\\tsec.jpg";
         
-         String fileName = file.getName();
+        fileplace = new File(file); 
+        
+        Part filePart = null;
+ 		try {
+ 			filePart = request.getPart(file);
+ 		} catch (IOException | ServletException e1) {
+ 			
+ 			e1.printStackTrace();
+ 		}
+ 		
+ 		
+ 		//We get the filename for doing different types of tests on it
+        final String fileName = getFileName(filePart);
+      
+         
          
          
         /*
@@ -108,10 +117,16 @@ public class FileDownloader {
 			conn = ds.getConnection();	
 
 			  //Here we select the number of counts from aggregate column in order to verify the number of connections:
-		      String query = "SELECT * FROM downloads WHERE userID=?";
+		      String query = "SELECT * FROM privileges WHERE privilegeID=?";
 		   
 		      PreparedStatement st = conn.prepareStatement(query);
-		      st.setString(1, "2");
+		      
+		      /* in normal situations the privilegeID should be retrieved from database based on UserID retrieved from the active session 
+		       * or from the web page made the request. 
+		       * For demonstration purposes we assume that the privilegeID is always 1, which indicated the Administration privilege ID number. 
+		       */
+		      
+		      st.setString(1, "1");
 
 		      // execute the query, and get a java result set
 		      //We bind the parameter in order to prevent SQL injections
@@ -125,7 +140,7 @@ public class FileDownloader {
 		      st.close();
 	          conn.close();
 			} catch (SQLException | NamingException e) {
-				LOGGER.log(Level.SEVERE, "cannot update database. check query = {0}", e.toString());
+				LOGGER.log(Level.SEVERE, "cannot read from database. check query = {0}", e.toString());
 			}	  
 
         	/*
@@ -146,7 +161,7 @@ public class FileDownloader {
 			try {
 				out = response.getOutputStream();
 			
-        	FileInputStream in = new FileInputStream(file);
+        	FileInputStream in = new FileInputStream(fileplace);
         	byte[] buffer = new byte[4096];
         	int length;
         	while ((length = in.read(buffer)) > 0){
@@ -197,11 +212,11 @@ public class FileDownloader {
 		}
 	}
 	
-	 public File getFile() {
+	 public String getFile() {
 		return file;
 	}
 
-	public void setFile(File file) {
+	public void setFile(String file) {
 		this.file = file;
 	}
 
@@ -243,6 +258,22 @@ public class FileDownloader {
           }
 		 
 		 
-     }      
+     }
+	
+	 private String getFileName(final Part part)
+	 {
+	         final String partHeader = part.getHeader("content-disposition");
+	         LOGGER.log(Level.INFO, "Part Header = {0}", partHeader);
+	         
+	         for (String content : part.getHeader("content-disposition").split(";"))
+	         {
+	             if (content.trim().startsWith("filename"))
+	             {
+	                 return content.substring(content.indexOf('=') + 1).trim().replace("\"", "");
+	             }
+	         }
+	         
+	         return null;
+	 } 
  
 }
