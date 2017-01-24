@@ -38,7 +38,7 @@ public class FileDownloader {
 	private whitelist wl = new whitelist();
 	inputvalidation validate = new inputvalidation();
 	private UIComponent component;
-    private DefaultStreamedContent file;
+    private File file;
     
     public FileDownloader() throws IOException {        
     
@@ -48,22 +48,30 @@ public class FileDownloader {
         FacesContext.getCurrentInstance().getExternalContext().setResponseContentType("text/html;charset=UTF-8");
         
         response.setContentType("text/html;charset=UTF-8");
+        
         String action = ""; 
         boolean proceed = false ;
         String mimetype = "";
         
 		 // Create path components to save the file
          // The location of stored files should always be outside of your root
-         InputStream stream = FacesContext.getCurrentInstance().getExternalContext().getResourceAsStream("/resources/images/admin.png");
-         file = new DefaultStreamedContent(stream, "image/jpg", "downloaded.jpg");
+         //InputStream stream = FacesContext.getCurrentInstance().getExternalContext().getResourceAsStream("/resources/images/admin.png");
+         //file = new DefaultStreamedContent(stream, "image/jpg", "downloaded.jpg");
          
+         file = new File("C:\\Users\\xvassilakopoulos\\Desktop\\test\\tsec.jpg");
+        
          String fileName = file.getName();
-
+         
+         
         /*
         First we check if the value is alphanumeric only to prevent uploading out of intended directory, 
         as well as other injections
         */
         
+        /* in normal situations the userID should be retrieved from session or from the web page made the request. 
+         * For demonstration purposes we assume that the usedID is always 2, which indicated the Administration ID number. 
+         */
+         
         if (validate.validateInput("2", fileName, "alphanummeric", "validation failed",request.getRemoteAddr(),"HIGH") == "validation failed")
         {
            proceed = false;
@@ -142,7 +150,7 @@ public class FileDownloader {
 			try {
 				out = response.getOutputStream();
 			
-        	FileInputStream in = new FileInputStream(fileName);
+        	FileInputStream in = new FileInputStream(file);
         	byte[] buffer = new byte[4096];
         	int length;
         	while ((length = in.read(buffer)) > 0){
@@ -167,7 +175,7 @@ public class FileDownloader {
 			 request.getSession().invalidate();
 	    	 request.setAttribute("msg","Session terminated! file has not been downloaded");		     
 		     ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
-		     ec.redirect(ec.getRequestContextPath() + "/login.xhtml");
+		     ec.redirect(ec.getRequestContextPath() + "/Menu.xhtml");
 		}
 		if (action.equals("validation failed"))
 		{
@@ -182,23 +190,23 @@ public class FileDownloader {
 			 request.getSession().invalidate();
 			 request.setAttribute("msg","Access Blocked! file has not been downloaded");		     
 		     ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
-		     ec.redirect(ec.getRequestContextPath() + "/login.xhtml");
+		     ec.redirect(ec.getRequestContextPath() + "/Menu.xhtml");
 		}
 		if (action.equals("Validated Successfully"))
 		{
 			request.setAttribute("msg","SUCCESS! file downloaded");		     
 		     ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
-		     ec.redirect(ec.getRequestContextPath() + "/login.xhtml");
+		     ec.redirect(ec.getRequestContextPath() + "/Menu.xhtml");
 		     
 		}
 	}
 	
-	 public StreamedContent getFile() {
+	 public File getFile() {
 		return file;
 	}
 
-	public void setFile(StreamedContent file) {
-		this.file = (DefaultStreamedContent) file;
+	public void setFile(File file) {
+		this.file = file;
 	}
 
 	public void fixedDownloads(String file, String download, HttpServletResponse response)
@@ -239,24 +247,6 @@ public class FileDownloader {
           }
 		 
 		 
-     }
-	 
-	 
-	 private String getFileName(final Part part)
-	 {
-	         final String partHeader = part.getHeader("content-disposition");
-	         LOGGER.log(Level.INFO, "Part Header = {0}", partHeader);
-	         
-	         for (String content : part.getHeader("content-disposition").split(";"))
-	         {
-	             if (content.trim().startsWith("filename"))
-	             {
-	                 return content.substring(content.indexOf('=') + 1).trim().replace("\"", "");
-	             }
-	         }
-	         
-	         return null;
-	 }   
-        
+     }      
  
 }
