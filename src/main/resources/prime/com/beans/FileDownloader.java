@@ -127,11 +127,7 @@ public class FileDownloader {
 			} catch (SQLException | NamingException e) {
 				LOGGER.log(Level.SEVERE, "cannot update database. check query = {0}", e.toString());
 			}	  
-        }
-        
-        if (fileName != null)
-        {
-        	
+
         	/*
             We also define the mime-type per download file.
             This is because whenever a user can only download images it is not necessary to set
@@ -165,7 +161,7 @@ public class FileDownloader {
 			}
           
         }
-        else if (fileName == null)
+        else if (file == null)
         {
         	action = "empty";
         }

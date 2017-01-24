@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 public class inputvalidation {
 	
 	private AuditLog Log = new AuditLog(); 
-	public static String validate = "pass"; 
+	public String validate = "pass"; 
 	
 	 public String validateInput(String user_id,String input, String type, String logMessage, String remote_address, String theatLevel)
      {
@@ -20,10 +20,11 @@ public class inputvalidation {
 		 {
 			 //Characters that may be used to interfere with the XPath query should be blocked, including ( ) = ‘ [ ] : , * / and all whitespace. 
         	 // Any input that does not match the white list should be rejected, not sanitized.
-    		 validator = "()='[]:,*/ ";
+    		 
+    		 validator = "(.*)(\\W+)(\\D+)(\\s+)(.*)";
 		 }
 		 else if (type.equals("alphanummeric"))		 
-			 validator = "^[a-zA-Z0-9]<>?\"\"+$#!";  		 
+			 validator = "^[A-Z0-9]+$";  		 
 		 else if (type.equals("nummeric"))
 			 validator = "^[0-9]*$";
 		 else
@@ -89,7 +90,7 @@ public class inputvalidation {
     		 
 		 }
 		 else if (type.equals("alphanummeric"))		 
-			 validator = "^[a-zA-Z0-9]<>?\"\"+$#!";  		 
+			 validator = "^[A-Z0-9]+$";  		 
 		 else if (type.equals("nummeric"))
 			 validator = "^[0-9]*$";
 		 else
