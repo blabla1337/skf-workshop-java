@@ -7,6 +7,7 @@
 <f:view contentType="text/html">
 
   <h:head>
+  
   	<h:outputStylesheet name="common-style.css" library="css" />
   </h:head>
  
@@ -19,7 +20,8 @@
       </ui:insert>
       	<img src="resources/images/skf.png"></img>
       </div>
-   
+           
+      
       <div id="content">
          <ui:insert name="content">
            <ui:include src="commonContentMenu.xhtml" />
@@ -28,15 +30,10 @@
 <h:form>
     <p:growl autoUpdate="true"/> 
     <p:panelMenu>
-        <p:submenu label="SKF Training Demo (Secure Coding)">
-            <p:menuitem value="1) File Upload validation" url="http://localhost:8080/SKF/FileUpload.xhtml"/>
-            <p:menuitem value="1) File Upload (Vulnerable)" url="http://localhost:8080/SKF/FileUploadVulnerable.xhtml"/>
-            <p:menuitem value="2) XML External Entities Prevention" url="http://localhost:8080/SKF/xxe.xhtml"/>
-            <p:menuitem value="2) XML External Entities (Vulnerable)" url="http://localhost:8080/SKF/XXEVulnerable.xhtml"/>
-            <p:menuitem value="4) Cross Site Request Forgery (CSRF) Prevention" url="http://localhost:8080/SKF/csrf.xhtml"  />  
-            <p:menuitem value="4) Cross Site Request Forgery (CSRF) (Vulnerable)" url="http://localhost:8080/SKF/csrfVulnerable.xhtml"  />      
-            <p:menuitem value="5) XPath query" url="http://localhost:8080/SKF/xpath.xhtml"/>
-            <p:menuitem value="5) XPath query (Vulnerable)" url="http://localhost:8080/SKF/XPathVulnerable.xhtml"/>
+        <p:submenu label="User Registration SQL truncation">
+            <p:menuitem value="User Registration" url="http://localhost:8080/SKF/RegisterUserVulnerable.xhtml" />
+            <p:menuitem value="login" url="http://localhost:8080/SKF/UserLoginVulnerable.xhtml"  />
+            <p:menuitem value="Main Menu" url="http://localhost:8080/SKF/Menu.xhtml"  />
         </p:submenu>
         <p:separator />
     </p:panelMenu>
@@ -49,10 +46,10 @@
           <ui:include src="commonFooter.xhtml" />
         </ui:insert>
       </div>
-
+    
+    
 </div>
   </h:body>
-  
   </f:view>
 </html>
  

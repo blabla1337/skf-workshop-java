@@ -140,7 +140,7 @@ public class RegisterUser {
 				}
 			    if (error == false)
 			    {
-			    	message = new FacesMessage(FacesMessage.SEVERITY_WARN, "User " + username + "has a new password", "password updated");  
+			    	message = new FacesMessage(FacesMessage.SEVERITY_WARN, "User " + username + " has a new password", "password updated");  
 		        	FacesContext.getCurrentInstance().addMessage(null,message);
 			    }
     	    }

@@ -13,6 +13,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParserFactory;
 
@@ -116,9 +117,14 @@ public class XMLFileUploader implements Serializable {
 		*/
 
 		/*
-		Both DocumentBuilderFactory and SAXParserFactory XML Parsers can be configured using the same techniques to protect them against XXE.The JAXP DocumentBuilderFactory setFeature method allows a developer to control which implementation-specific XML processor features are enabled or disabled. The features can either be set on the factory or the underlying XMLReader setFeature method. Each XML processor implementation has its own features that govern how DTDs and external entities are processed.
+		 Both DocumentBuilderFactory and SAXParserFactory XML Parsers can be configured using the same techniques
+		 to protect them against XXE.
+		 The JAXP DocumentBuilderFactory setFeature method allows a developer to control which implementation-specific XML processor features are enabled or disabled. 
+		 The features can either be set on the factory or the underlying XMLReader setFeature method. 
+		 Each XML processor implementation has its own features that govern how DTDs and external entities are processed.
 		*/
-		SAXParserFactory spf = SAXParserFactory.newInstance();
+		
+        SAXParserFactory spf = SAXParserFactory.newInstance();
 		javax.xml.parsers.SAXParser saxParser = spf.newSAXParser();
 		XMLReader reader = saxParser.getXMLReader();
 		
@@ -130,24 +136,59 @@ public class XMLFileUploader implements Serializable {
 		      spf.setFeature("http://xml.org/sax/features/external-general-entities", false);
 		      // Using the XMLReader's setFeature
 		      reader.setFeature("http://xml.org/sax/features/external-general-entities", false);
-		 
-		 
+		  
 		      // Xerces 2 only - http://xerces.apache.org/xerces-j/features.html#external-general-entities
-		      spf.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+		     reader.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+			  
+			  reader.setFeature("http://xml.org/sax/features/external-general-entities", false);
+			  
+			  reader.setFeature("http://xml.org/sax/features/external-parameter-entities", false); 
+			  
+			  spf.setFeature("http://xml.org/sax/features/external-general-entities", false);
+			  
+			  spf.setFeature("http://xml.org/sax/features/external-parameter-entities", false);
+			  
+			  spf.setFeature("http://apache.org/xml/features/nonvalidating/load-external-dtd",false);
+
 		 
 		      // remaining parser logic
-		      //We get the filename for doing different types of tests on it
+		      // We get the filename for doing different types of tests on it
 		      
+		     // DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+		    //  String FEATURE = null;
 		      
+		     
+		      
+		    	
+		      // This is the PRIMARY defense. If DTDs (doctypes) are disallowed, almost all XML entity attacks are prevented
+		      // Xerces 2 only - http://xerces.apache.org/xerces2-j/features.html#disallow-doctype-decl
+		    //  FEATURE = "http://apache.org/xml/features/disallow-doctype-decl";
+		   //   dbf.setFeature(FEATURE, true);		      
+		      // If you can't completely disable DTDs, then at least do the following:
+		      // Xerces 1 - http://xerces.apache.org/xerces-j/features.html#external-general-entities
+		      // Xerces 2 - http://xerces.apache.org/xerces2-j/features.html#external-general-entities
+		      // JDK7+ - http://xml.org/sax/features/external-general-entities    
+		    //  FEATURE = "http://xml.org/sax/features/external-general-entities";
+		    //  dbf.setFeature(FEATURE, false);
+		      
+		      // Disable external DTDs as well
+		    //  FEATURE = "http://apache.org/xml/features/nonvalidating/load-external-dtd";
+		    //  dbf.setFeature(FEATURE, false);
+		      
+		      // and these as well, per Timothy Morgan's 2014 paper: "XML Schema, DTD, and Entity Attacks" (see reference below)
+		    //  dbf.setXIncludeAware(false);
+		    //  dbf.setExpandEntityReferences(false);
+		      
+        
 		     final String fileName = event.getFile().getFileName().toString();
 
 		        /*
 		        First we check if the value is alphanumeric only to prevent uploading out of intended directory, 
 		        as well as other injections
 		        */
-		        if (validate.validateInput("", fileName,"alphanummeric", "validation failed", "HIGH") == true)
+		        if (validate.validateInput("", fileName,"alphanummeric", "validation failed", "HIGH") == false)
 		        {
-		           continueFunction = false;
+		          continueFunction = false;
 		        }
 		                
 		        /*
@@ -163,7 +204,6 @@ public class XMLFileUploader implements Serializable {
 		        if (!StrSpli.equals("xml"))
 		        {
 		            continueFunction = false;
-		     
 		        }
 		        
 		        /*
@@ -184,7 +224,6 @@ public class XMLFileUploader implements Serializable {
 		        	MyHandler handler = new MyHandler();
 		        	
 		        	//ServletContext cont = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
-		            
 		            // String filepath = cont.getRealPath(fileName); 
 		        	
 		        	saxParser.parse(new File(destination + fileName), handler);
@@ -212,13 +251,14 @@ public class XMLFileUploader implements Serializable {
 			    	ConfigurableNavigationHandler nav = (ConfigurableNavigationHandler) context.getApplication().getNavigationHandler();        
 			        nav.performNavigation("ViewFromXML");
 			       
-			    }      
+			    } 
+		
   
-		    } catch (ParserConfigurationException | SAXException | IOException e) {
+		    } catch (SAXException | IOException e) {
 
 		    	logger.info(e.toString());
 		    	
-		    }			
-	}
+		    }	
+	}}
 	
-}
+

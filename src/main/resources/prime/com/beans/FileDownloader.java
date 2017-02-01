@@ -170,7 +170,6 @@ public class FileDownloader {
         	
 			} catch (IOException e) {
 				LOGGER.log(Level.SEVERE, "Cannot download file = {0}", e.toString());
-			
 			}
           
         }

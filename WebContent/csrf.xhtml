@@ -2,6 +2,7 @@
     xmlns:h="http://java.sun.com/jsf/html"
     xmlns:f="http://java.sun.com/jsf/core"
     xmlns:p="http://primefaces.org/ui"
+    xmlns:cu="http://localhost:8080/custom"
     xmlns:ui="http://java.sun.com/jsf/facelets">
  
  
@@ -51,7 +52,7 @@
             
             <f:facet name="footer">
                 <p:commandButton value="Login" update="growl" actionListener="#{userLogin.login}" ajax="false" oncomplete="handleLoginRequest(xhr, status, args)">
-                
+               
              
                 </p:commandButton>
             </f:facet>  

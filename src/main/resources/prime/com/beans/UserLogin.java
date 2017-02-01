@@ -313,11 +313,14 @@ public class UserLogin  implements Serializable {
         	String login_xpath = x.checkuser(fXmlFile,authkey);
         	
         	if (fc.getExternalContext().getSessionMap().get(AUTH_KEY) != null)
+      
 	        if ( (connect_db != true && login_xpath.equals("")) || (connect_db == true && !login_xpath.equals(""))){
 	          ConfigurableNavigationHandler nav = (ConfigurableNavigationHandler) fc.getApplication().getNavigationHandler();        
 	          nav.performNavigation("access-denied");
 	        }
+
         }
+        
         else if (!this.isLoggedIn())
 	   {
 		   ConfigurableNavigationHandler nav = (ConfigurableNavigationHandler) fc.getApplication().getNavigationHandler(); 

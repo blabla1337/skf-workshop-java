@@ -319,20 +319,20 @@ public class xpath  implements Serializable {
          //Another method of avoiding XPath injections is by using variable into XPATH expression with a variable resolver enabled evaluator. 
          //See XPath parameterization example
          
-	     if (validate.validateInput(username,username,"symbols", "x-path input validation for username", "HIGH") == false) 
-	    { continueFunction = false; }
+	   //  if (validate.validateInput(username,username,"symbols", "x-path input validation for username", "HIGH") == false) 
+	 //   { continueFunction = false; }
 	     
-	     if (validate.validateInput(username,password,"symbols", "x-path input validation for password", "HIGH") == false) 
-	    { continueFunction = false; }
+	  //   if (validate.validateInput(username,password,"symbols", "x-path input validation for password", "HIGH") == false) 
+	  //  { continueFunction = false; }
 	     
 	
          //Only if our validation function returned true we put the user input in the function
          //fXmlFile is the java.io.File object of the example XML document.
          
          File fXmlFile = new File("C:\\xmldb\\users.xml");
-          
-         if (continueFunction == true)
-         {     	     	 
+         
+     //    if (continueFunction == true)
+    //    {     	     	 
 				
 				 	String login_result = this.xpathconnect(fXmlFile,username);
 				 	if (login_result.equals(""))
@@ -362,6 +362,6 @@ public class xpath  implements Serializable {
 				 	  
 			        FacesContext.getCurrentInstance().addMessage(null, message);
 			        context.addCallbackParam("loggedIn", loggedIn);
-          }         
+        //  }         
      }
 }
