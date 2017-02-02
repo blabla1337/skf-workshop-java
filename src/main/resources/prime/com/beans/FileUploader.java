@@ -71,6 +71,7 @@ public class FileUploader {
            sessiontermination=true;
         }   
         
+        
         else if (validate.validateInput(userID, fileName, "alphanummeric", "Block access",origRequest.getRemoteAddr(),"HIGH").equals("block"))
         {
            continueFunction = false;
