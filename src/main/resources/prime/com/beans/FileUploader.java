@@ -58,19 +58,20 @@ public class FileUploader {
         as well as other injections
         */
         
-        if (validate.validateInput(userID, fileName, "alphanummeric", "validation failed",origRequest.getRemoteAddr(),"HIGH") == "validation failed")
+        if (validate.validateInput(userID, fileName, "alphanummeric", "validation failed",origRequest.getRemoteAddr(),"HIGH").equals("validation failed"))
+        		
         {
            continueFunction = false;
         }
         
-        else if (validate.validateInput(userID, fileName, "alphanummeric", "Session Termination",origRequest.getRemoteAddr(),"HIGH") == "terminate")
+        else if (validate.validateInput(userID, fileName, "alphanummeric", "Session Termination",origRequest.getRemoteAddr(),"HIGH").equals("terminate"))
         {
            origRequest.getSession().invalidate();
            continueFunction = false;
            sessiontermination=true;
         }   
         
-        else if (validate.validateInput(userID, fileName, "alphanummeric", "Block access",origRequest.getRemoteAddr(),"HIGH") == "block")
+        else if (validate.validateInput(userID, fileName, "alphanummeric", "Block access",origRequest.getRemoteAddr(),"HIGH").equals("block"))
         {
            continueFunction = false;
            blockaccess=true;
