@@ -38,15 +38,15 @@
         <h:panelGrid columns="2" id="def" cellpadding="5">
 
             <h:outputLabel for="username" value="Username:"/>
-            <p:inputText id="username" value="#{xpath.username}" required="true" label="username" />
+            <p:inputText id="username" value="#{xpathvulnerable.username}" required="true" label="username" />
 
             <h:outputLabel for="password" value="Password:"/>
 
-            <p:password id="password" value="#{xpath.password}" required="true" label="password" />
+            <p:password id="password" value="#{xpathvulnerable.password}" required="true" label="password" />
 
             <f:facet name="footer">
-                <p:commandButton value="Login" update="growl" actionListener="#{xpath.xpathLogin}" ajax="false" oncomplete="handleLoginRequest(xhr, status, args)">
-                	<cu:antiCSRF/>             
+                <p:commandButton value="Login" update="growl" actionListener="#{xpathvulnerable.xpathLogin}" ajax="false" oncomplete="handleLoginRequest(xhr, status, args)">
+                	           
                 </p:commandButton>
             </f:facet>  
         </h:panelGrid>
@@ -76,9 +76,7 @@
         }
     }
 </script>
-    
     </div>
-    
      <div id="footer">
         <ui:insert name="footer" >
           <ui:include src="commonFooter.xhtml" />

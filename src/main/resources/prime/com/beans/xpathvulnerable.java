@@ -1,38 +1,35 @@
 package prime.com.beans;
-	import java.io.File;
-	import java.io.FileInputStream;
-	import java.io.IOException;
-	import java.io.Serializable;
-	import java.time.LocalDateTime;
-	import java.util.UUID;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.util.UUID;
+import javax.faces.application.FacesMessage;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpression;
+import javax.xml.xpath.XPathFactory;
+import org.apache.log4j.Logger;
+import org.primefaces.context.RequestContext;
+import org.w3c.dom.Document;
+import org.xml.sax.InputSource;
 
-	import javax.faces.application.FacesMessage;
-	import javax.faces.bean.ManagedBean;
-	import javax.faces.bean.SessionScoped;
-	import javax.faces.context.FacesContext;
-	import javax.faces.event.ActionEvent;
-	import javax.servlet.http.Cookie;
-	import javax.servlet.http.HttpServletRequest;
-	import javax.servlet.http.HttpServletResponse;
-	import javax.xml.parsers.DocumentBuilder;
-	import javax.xml.parsers.DocumentBuilderFactory;
-	import javax.xml.xpath.XPath;
-	import javax.xml.xpath.XPathConstants;
-	import javax.xml.xpath.XPathExpression;
-	import javax.xml.xpath.XPathFactory;
-
-	import org.apache.log4j.Logger;
-	import org.primefaces.context.RequestContext;
-	import org.w3c.dom.Document;
-	import org.xml.sax.InputSource;
-
-	import com.Lib.AuditLog;
-	import com.Lib.hashing;
-	import com.Lib.inputvalidation; 
+import com.Lib.AuditLog;
+import com.Lib.hashing; 
 
 	@ManagedBean
 	@SessionScoped
-	public class XPathVulnerable  implements Serializable {
+	public class xpathvulnerable implements Serializable {
 		
 		private static final long serialVersionUID = 1L;
 		//First we include the audit log class.
@@ -40,9 +37,8 @@ package prime.com.beans;
 			
 		//Second we include the password hash.
 		hashing hash = new hashing();
-
 		
-		final static Logger logger = Logger.getLogger(xpath.class);
+		final static Logger logger = Logger.getLogger(xpathvulnerable.class);
 		
 		public static final String AUTH_KEY = "User: ";
 		
@@ -52,7 +48,6 @@ package prime.com.beans;
 		private String password; 
 		private String userID_result;
 		private String userID;
-
 
 		public String getUserID_result() {
 			return userID_result;
@@ -104,18 +99,14 @@ package prime.com.beans;
 	    
 	   	
 		public void loginAction(String userId){
-			
-			
+	
 	    	//we include the random input validation class.
 	        
 	        HttpServletRequest origRequest = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
 	        HttpServletResponse origResponse = (HttpServletResponse)FacesContext.getCurrentInstance().getExternalContext().getResponse();
 	        FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put(AUTH_KEY, username);
-	        
 	        String uname = this.getUsername(); 
-	       
-	        
-	 
+
 	        	/*
 	            This is is to prevent session fixation, after login we create a new cookie which
 	            we then use to authenticate. This value can not be fixated since it is set after 
@@ -143,8 +134,6 @@ package prime.com.beans;
 
 	             origRequest.getSession().setAttribute("userID", userId);
 	             FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put(AUTH_KEY, uname);
-	      
-			
 		}
 		
 		//the following function used to check if the user exists 
