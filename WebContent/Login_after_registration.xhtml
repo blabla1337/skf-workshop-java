@@ -46,7 +46,7 @@
 
             <p:password id="password" value="#{userLogin.password}" required="true" label="password" />
             <f:facet name="footer">
-                <p:commandButton value="Login" update="growl" actionListener="#{userLoginView.loginSQLtruncation}" oncomplete="handleLoginRequest(xhr, status, args)"/>
+                <p:commandButton value="Login" update="growl" actionListener="#{userLogin.loginSQLtruncation}" oncomplete="handleLoginRequest(xhr, status, args)"/>
             </f:facet>  
         </h:panelGrid>
         

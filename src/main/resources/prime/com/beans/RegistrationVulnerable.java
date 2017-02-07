@@ -115,23 +115,23 @@ package prime.com.beans;
 		        structure in order to prevent SQL column truncation.
 		        */
 			 
-		//	 int length = username.length(); 
+			 int length = username.length(); 
 			   
 			 	/*
 		        We now compare the length of the username against the allowed string length in
 		        The database structure
 		        */
-		//	 if(length >= 21){
+			 if(length >= 21){
 		            //If length is to large the function must return false and the result must be logged.
-			//	    Log.SetLog(username, "Username was to long!", "FAIL!", LocalDateTime.now(), "");
-		//		    added = false ;
-		      //  }
+				    Log.SetLog(username, "Username was to long!", "FAIL!", LocalDateTime.now(), "");
+				    added = false ;
+		        }
 			 
 			 
 			 
 			 
-			 //If true then register the user!       
-		//     if(this.userCheck(username) == true){
+			 // If true then register the user!
+		     if(this.userCheck(username) == true){
 		    	/*
 	            Then we encrypt the password 
 	            */	    	
@@ -165,7 +165,7 @@ package prime.com.beans;
 			    	 added=false;
 					 logger.error("cannot insert  values into the database. check query" + e.toString() );
 				}    
-//		}
+		}
 		     if(added != true)
 		    	  RequestContext.getCurrentInstance().showMessageInDialog(fail_message);
 		     else
