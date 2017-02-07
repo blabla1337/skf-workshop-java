@@ -39,14 +39,14 @@
         <h:panelGrid columns="2" id="def" cellpadding="5">
 
             <h:outputLabel for="username" value="Username:"/>
-            <p:inputText id="username" value="#{userLoginView.username}" required="true" label="username" />
+            <p:inputText id="username" value="#{userLogin.username}" required="true" label="username" />
 
             <h:outputLabel for="password" value="Password:"/>
 
-            <p:password id="password" value="#{userLoginView.password}" required="true" label="password" />
+            <p:password id="password" value="#{userLogin.password}" required="true" label="password" />
                    
             <f:facet name="footer">
-                <p:commandButton value="Login" update="growl" actionListener="#{userLoginView.login}" ajax="false" oncomplete="handleLoginRequest(xhr, status, args)">
+                <p:commandButton value="Login" update="growl" actionListener="#{userLogin.login}" ajax="false" oncomplete="handleLoginRequest(xhr, status, args)">
                   <cu:antiCSRF/>   
                 </p:commandButton>
             </f:facet>  

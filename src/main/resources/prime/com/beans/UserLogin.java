@@ -198,8 +198,7 @@ public class UserLogin  implements Serializable {
         HttpServletResponse origResponse = (HttpServletResponse)FacesContext.getCurrentInstance().getExternalContext().getResponse();
         FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put(AUTH_KEY, username);
         FacesMessage message = null;
-        boolean loggedIn = false;
-        String user_name = "";         
+        boolean loggedIn = false;      
         String uname = this.getUsername(); 
        
         String userId = "";
@@ -259,12 +258,12 @@ public class UserLogin  implements Serializable {
     
          String passhash = hash.hashPassword(salt, password);
          
-         if(username != null && "admin".equals(user_name) && password != null && passhash.equals(passwordHash)) {
+         if(username != null && "admin".equals(uname) && password != null && passhash.equals(passwordHash)) {
              loggedIn = true;
              message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Welcome", username);
              FacesContext.getCurrentInstance().getExternalContext().redirect("admin_page.xhtml");
          } 
-         else if(username != null && !"admin".equals(user_name) && password != null && passhash.equals(passwordHash)){
+         else if(username != null && !"admin".equals(uname) && password != null && passhash.equals(passwordHash)){
        
              loggedIn = false;
              message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Welcome", username);
