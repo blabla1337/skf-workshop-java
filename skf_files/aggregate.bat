@@ -1,0 +1,1 @@
+C:\xampp\mysql\bin\mysql.exe -u root < reset_aggregate.sql

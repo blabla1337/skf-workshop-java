@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Employees>
+   <Employee ID="1">
+      <FirstName>Arnold</FirstName>
+      <LastName>Baker</LastName>
+      <UserName>ABaker</UserName>
+	  <id>1</id>
+      <Password>Hv3KPG906xBBhE1z3k5QRD9SArIYLeiSFA==</Password>
+	  <salt>+yoY1sPd+V6SC+0aEiA9lHjV9EC8zOCw+A==</salt>
+      <Type>Admin</Type>
+   </Employee>
+   <Employee ID="2">
+      <FirstName>Peter</FirstName>
+      <LastName>Pan</LastName>
+      <UserName>PPan</UserName>
+	  <id>2</id>
+      <Password>Cftv1ip25PJdmf8DdfU5NM/K/cjEqEAthw==</Password>
+	  <salt>/KAMdM09RVNZ8nOWHAsqKzrfyY6VEZgRQA==</salt>
+      <Type>User</Type>
+   </Employee>
+</Employees>
