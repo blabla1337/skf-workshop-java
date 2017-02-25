@@ -161,7 +161,7 @@ public class Registration {
 		 
 		    } catch (SQLException | NamingException e) {
 		    	 added=false;
-				 logger.error("cannot insert  values into the database. check query" + e.toString() );
+				 logger.error("cannot insert  values into the database. check query " + e.toString() );
 			}    
 	}
 	     if(added != true)

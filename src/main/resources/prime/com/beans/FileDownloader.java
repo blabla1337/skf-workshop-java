@@ -21,11 +21,9 @@ import javax.faces.context.FacesContext;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
-import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.Part;
 import javax.sql.DataSource;
 
 import com.Lib.AuditLog;
@@ -37,6 +35,13 @@ import com.Lib.whitelist;
 @MultipartConfig
 public class FileDownloader {
      
+	// Applications are rarely tested for Unicode exploits, and yet many are vulnerable due to the same sort of issues which allows HTTP Request Smuggling to work – every browser, 
+    // web server, web application firewall or HTTP inspection agent, and other device treats user locale handling in different (and usually confusing) manner.
+    // Canonicalization deals with the way in which systems convert data from one form to another. 
+    // Canonical means the simplest or most standard form of something. Canonicalization is the process of converting something from one representation to the simplest form.
+    // Web applications have to deal with lots of canonicalization issues from URL encoding to IP address translation. 
+    // When security decisions are made based on less than perfectly canonicalized data, the application itself must be able to deal with unexpected input safely. 
+	
 	private final static Logger LOGGER = Logger.getLogger(FileUploader.class.getCanonicalName());
 	private AuditLog Log = new AuditLog(); 
 	private whitelist wl = new whitelist();
@@ -49,7 +54,11 @@ public class FileDownloader {
     	
     	FacesContext context = FacesContext.getCurrentInstance();
         HttpServletRequest request = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
-        HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+        HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();  
+        
+        // Unicode Encoding is a method for storing characters with multiple bytes. Wherever input data is allowed, 
+        // data can be entered using Unicode to disguise malicious code and permit a variety of attacks. RFC 2279 references many ways that text can be encoded. 
+        
         FacesContext.getCurrentInstance().getExternalContext().setResponseContentType("text/html;charset=UTF-8");
         
         String action = ""; 

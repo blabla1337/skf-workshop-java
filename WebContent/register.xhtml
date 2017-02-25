@@ -31,17 +31,17 @@
     <h:panelGrid columns="2" styleClass="centered" id="matchGrid" cellpadding="1">
     
         <h:outputText styleClass="button" value="Username: " />
-        <p:inputText id="user" value="#{registerView.username}" />
+        <p:inputText id="user" value="#{registration.username}" />
  
         <h:outputText styleClass="button" value="Password:" />
-        <p:password id="pass" value="#{registerView.password}" match="pwd2" feedback="true" />
+        <p:password id="pass" value="#{registration.password}" match="pwd2" feedback="true" />
         
         <h:outputText styleClass="button" value="Confirm Password:"/> 
-        <p:password id="pwd2" value="#{registerView.password2}" label="password" required="true"/>
+        <p:password id="pwd2" value="#{registration.password2}" label="password" required="true"/>
       
     </h:panelGrid>
 
- 	<p:commandButton update="matchGrid" value="Register" actionListener="#{registerView.register}" ajax="false" />
+ 	<p:commandButton update="matchGrid" value="Register" actionListener="#{registration.register}" ajax="false" />
 
 
 	</h:form>
