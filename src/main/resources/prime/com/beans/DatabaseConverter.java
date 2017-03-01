@@ -11,6 +11,19 @@ import javax.faces.convert.FacesConverter;
 @FacesConverter(value = "DatabaseConverter")
 public class DatabaseConverter implements Converter{
 
+	/*
+	
+	Sometimes standard JSF converters and validators don't go far enough. For example:
+	
+	    - Converting to objects other than numbers or dates
+	
+	    - Performing application-specific validation such as checking a credit card 
+	
+	With a moderate amount of programming, you can implement application-specific converters and validators.
+	
+	Supply your own conversion and validation code for more complex scenarios
+
+	*/
 	 
  @Override
  public Object getAsObject(FacesContext ctx, UIComponent component,String dbId) {
