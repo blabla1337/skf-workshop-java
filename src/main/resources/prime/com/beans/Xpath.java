@@ -28,22 +28,22 @@ import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 
 import com.Lib.AuditLog;
-import com.Lib.hashing;
-import com.Lib.inputvalidation; 
+import com.Lib.Hashing;
+import com.Lib.InputValidation; 
 
 @ManagedBean
 @SessionScoped
-public class xpath  implements Serializable {
+public class Xpath  implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	//First we include the audit log class.
 	AuditLog Log = new AuditLog();
 		
 	//Second we include the password hash.
-	hashing hash = new hashing();
+	Hashing hash = new Hashing();
 
 	
-	final static Logger logger = Logger.getLogger(xpath.class);
+	final static Logger logger = Logger.getLogger(Xpath.class);
 	
 	public static String AUTH_KEY = "User: ";
 	
@@ -307,7 +307,7 @@ public class xpath  implements Serializable {
 		 FacesMessage message = null;
 	     boolean loggedIn = false;
 		 boolean continueFunction = true;         
-         inputvalidation validate = new inputvalidation();
+		 InputValidation validate = new InputValidation();
   
          //Here we put the variable in our input validation method in order to prevent untrusted user input from parsing
          //NOTE: logging and countering is also done in your validation method

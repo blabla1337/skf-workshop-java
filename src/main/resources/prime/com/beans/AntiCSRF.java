@@ -1,4 +1,8 @@
 package prime.com.beans;
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.util.Map;
+
 import javax.faces.application.ConfigurableNavigationHandler;
 import javax.faces.component.FacesComponent;
 import javax.faces.component.UIComponentBase;
@@ -9,12 +13,11 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
 import org.apache.log4j.Logger;
+
 import com.Lib.AuditLog;
-import com.Lib.randomizer;
-import java.io.IOException;
-import java.time.LocalDateTime;
-import java.util.Map;
+import com.Lib.Randomizer;
 
 @FacesComponent(value = "Prime.com.beans.AntiCSRF")
 public class AntiCSRF extends UIComponentBase {
@@ -28,7 +31,7 @@ public class AntiCSRF extends UIComponentBase {
 		HttpServletRequest origRequest = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
 
     	//we include the random password/token class.
-  	    randomizer CSRF = new randomizer();
+  	    Randomizer CSRF = new Randomizer();
 		 /*
         Now we create a random value for our CSRF tokens. See "Random password token generation" in
         the code examples for more detailed information:
@@ -48,14 +51,11 @@ public class AntiCSRF extends UIComponentBase {
         String AUTH_KEY =  (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("AUTH_KEY");
        	FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove(AUTH_KEY);
    		FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-   		Cookie cookie = null;
-   		Cookie[] cookies = null;
    	    // Get an array of Cookies associated with this domain
-   	    cookies = origRequest.getCookies();		         
-   		for (Cookie cookie2 : cookies) 
-   		{
-   			cookie = cookie2;		         
-   				if (cookie.getName().equals("JSESSIONID"))
+   		Cookie[] cookies = origRequest.getCookies();		         
+   		for (Cookie cookie : cookies) 
+   		{	         
+   				if ("JSSESIONID".equalsIgnoreCase(cookie.getName()))
    				{        	 
 	   				cookie.setValue(null);	       		
 	   				origResponse.addCookie(cookie);

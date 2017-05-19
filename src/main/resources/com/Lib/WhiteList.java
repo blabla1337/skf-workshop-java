@@ -3,13 +3,13 @@ package com.Lib;
 
 import org.apache.log4j.Logger;
 
-public class whitelist
+public class WhiteList
 {
 	
-	final static Logger logger = Logger.getLogger(whitelist.class);
+	final static Logger logger = Logger.getLogger(WhiteList.class);
 
 	
-	public boolean whitelisting(String allowed, String input)
+	public boolean WhiteListing(String allowed, String input)
 	
 	{
 		 /*

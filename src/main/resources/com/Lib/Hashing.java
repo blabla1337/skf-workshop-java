@@ -5,9 +5,12 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import org.apache.commons.codec.binary.Base64;
+import org.apache.log4j.Logger;
 
-public class hashing {
+public class Hashing {
 
+	final static Logger logger = Logger.getLogger(Hashing.class);
+	
 	public String createSalt(String password) throws NoSuchAlgorithmException, InvalidKeyException, UnsupportedEncodingException
     {
 		/*
@@ -38,7 +41,7 @@ public class hashing {
 			Hasher = new Rfc2898DeriveBytes(Password + "ALongPepperValue",Salt.getBytes(), 10000);
 		} catch (InvalidKeyException | NoSuchAlgorithmException | UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("error in hasing password!" + e.toString());
 		}
         String bencoded = new String(Base64.encodeBase64(Hasher.GetBytes(25)));
         return bencoded;
@@ -52,7 +55,7 @@ public class hashing {
 			Hasher = new Rfc2898DeriveBytes(enteredPassword + "ALongPepperValue",saltHash.getBytes(), 10000);
 		} catch (InvalidKeyException | NoSuchAlgorithmException | UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("Validation error in hasing password!" + e.toString());
 		}
         String bencoded = new String(Base64.encodeBase64(Hasher.GetBytes(25)));
         if (bencoded.equals(passwordHash))

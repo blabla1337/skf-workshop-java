@@ -27,8 +27,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
 import com.Lib.AuditLog;
-import com.Lib.inputvalidation;
-import com.Lib.whitelist;
+import com.Lib.InputValidation;
+import com.Lib.WhiteList;
  
 
 @ManagedBean(name="fileDownloadController")
@@ -44,8 +44,8 @@ public class FileDownloader {
 	
 	private final static Logger LOGGER = Logger.getLogger(FileUploader.class.getCanonicalName());
 	private AuditLog Log = new AuditLog(); 
-	private whitelist wl = new whitelist();
-	inputvalidation validate = new inputvalidation();
+	private WhiteList wl = new WhiteList();
+	InputValidation validate = new InputValidation();
 	private UIComponent component;
     private String file;
     private File fileplace;
@@ -235,7 +235,7 @@ public class FileDownloader {
          allow an attacker to also download important other files from your server, so instead
          we white-list them.
          */
-		  if (wl.whitelisting(file, download) != false)
+		  if (wl.WhiteListing(file, download) != false)
           {
 			  
 			    response.reset();

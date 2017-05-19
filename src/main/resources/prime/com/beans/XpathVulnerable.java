@@ -25,20 +25,20 @@ import org.w3c.dom.Document;
 import org.xml.sax.InputSource;
 
 import com.Lib.AuditLog;
-import com.Lib.hashing; 
+import com.Lib.Hashing; 
 
 	@ManagedBean
 	@SessionScoped
-	public class xpathvulnerable implements Serializable {
+	public class XpathVulnerable implements Serializable {
 		
 		private static final long serialVersionUID = 1L;
 		//First we include the audit log class.
 		AuditLog Log = new AuditLog();
 			
 		//Second we include the password hash.
-		hashing hash = new hashing();
+		Hashing hash = new Hashing();
 		
-		final static Logger logger = Logger.getLogger(xpathvulnerable.class);
+		final static Logger logger = Logger.getLogger(XpathVulnerable.class);
 		
 		public static final String AUTH_KEY = "User: ";
 		

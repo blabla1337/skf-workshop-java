@@ -4,8 +4,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import org.apache.log4j.Logger;
-import com.Lib.inputvalidation;
-import com.Lib.whitelist;
+import com.Lib.InputValidation;
+import com.Lib.WhiteList;
+
 
 public class DirPathTraversal {
 	
@@ -14,8 +15,8 @@ public class DirPathTraversal {
 	
 	public void DirValidation() throws IOException
 	{
-	inputvalidation validate = new inputvalidation();
-	whitelist listme = new whitelist();
+	InputValidation validate = new InputValidation();
+	WhiteList listme = new WhiteList();
 
 	/*
     First, we want to filter the filenames for expected values. For this example we only use 0-9
@@ -31,9 +32,10 @@ public class DirPathTraversal {
     Let's assume there are three files named 1,2,3
     */
 
-    if (listme.whitelisting("1,2,3", getFile.toString()) == false) { validated = false; }
+    if (listme.WhiteListing("1,2,3", getFile.toString()) == false) { validated = false; }
 
     //Only if the pattern was true we allow the variable into the stream reader function
+    FileInputStream fis = null; 
     if (validated == true)
     {
     	String canonicalPath = getFile.getCanonicalPath();
@@ -41,13 +43,16 @@ public class DirPathTraversal {
     	{
     	   // Invalid file; handle error
     	}            	 
-    	FileInputStream fis = new FileInputStream(canonicalPath);  
+    	fis = new FileInputStream(canonicalPath); 
+    	
     	
     }         
     else
     {
-    	logger.error("invalid userinput was detected!");              
+    	logger.error("invalid userinput was detected!");  
     }
+    if(fis != null)
+    	fis.close();
 
 	}
 }

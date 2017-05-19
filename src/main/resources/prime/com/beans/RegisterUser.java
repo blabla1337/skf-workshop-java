@@ -21,14 +21,14 @@ import javax.sql.DataSource;
 import org.apache.log4j.Logger;
 
 import com.Lib.AuditLog;
-import com.Lib.hashing;
+import com.Lib.Hashing;
 
 
 @ManagedBean
 public class RegisterUser {
 
 	   private AuditLog Log = new AuditLog();
-	    private hashing hash = new hashing();
+	    private Hashing hash = new Hashing();
 		final static Logger logger = Logger.getLogger(RegisterUser.class);
 
 		private String Password; 

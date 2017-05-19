@@ -26,7 +26,7 @@ import org.xml.sax.XMLReader;
 
 import com.Lib.Employee;
 import com.Lib.MyHandler;
-import com.Lib.inputvalidation;
+import com.Lib.InputValidation;
 
 @ManagedBean(name="XMLDataPreview")
 @SessionScoped
@@ -36,7 +36,7 @@ public class XMLFileUploader implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
-	inputvalidation validate = new inputvalidation();
+	InputValidation validate = new InputValidation();
 	
 	private UIComponent component;
 	   

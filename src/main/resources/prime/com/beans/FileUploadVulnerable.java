@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.primefaces.event.FileUploadEvent;
 
 import com.Lib.AuditLog;
-import com.Lib.inputvalidation;
+import com.Lib.InputValidation;
 
 @ManagedBean(name="fileUploadVulnerableController")
 	public class FileUploadVulnerable {
@@ -26,7 +26,7 @@ import com.Lib.inputvalidation;
 	   private String destination="C:\\Users\\xvassilakopoulos\\Desktop\\test\\";
 	   private final static Logger LOGGER = Logger.getLogger(FileUploader.class.getCanonicalName());
 	   private AuditLog Log = new AuditLog(); 
-	   inputvalidation validate = new inputvalidation();
+	   InputValidation validate = new InputValidation();
 	   private UIComponent component;
 	 
 	    public void upload(FileUploadEvent event) throws IOException, ServletException { 

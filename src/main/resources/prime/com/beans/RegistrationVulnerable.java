@@ -20,7 +20,7 @@ package prime.com.beans;
 	import org.primefaces.context.RequestContext;
 
 	import com.Lib.AuditLog;
-	import com.Lib.hashing;
+	import com.Lib.Hashing;
 
 	@ManagedBean
 	public class RegistrationVulnerable {
@@ -104,7 +104,7 @@ package prime.com.beans;
 		{
 			    FacesMessage fail_message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "User Info", "failed to add user");
 			    FacesMessage success_message = new FacesMessage(FacesMessage.SEVERITY_INFO, "User Info", "User Added Succesfully!");
-				hashing hasher = new hashing();	
+				Hashing hasher = new Hashing();	
 		    	String salt = hasher.createSalt(Password);  
 		    	boolean added = false ; 
 		    	

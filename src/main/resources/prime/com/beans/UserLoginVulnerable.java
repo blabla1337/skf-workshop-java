@@ -29,8 +29,8 @@
 	import org.primefaces.context.RequestContext;
 
 	import com.Lib.AuditLog;
-	import com.Lib.hashing;
-	import com.Lib.inputvalidation;
+	import com.Lib.Hashing;
+	import com.Lib.InputValidation;
 	 
 	@ManagedBean
 	@SessionScoped
@@ -189,10 +189,10 @@
 	    	AuditLog Log = new AuditLog();
 	    		
 	    	//Second we include the password hash.
-	    	hashing hash = new hashing();
+	    	Hashing hash = new Hashing();
 
 	    	//Last we include the random input validation class.
-	        inputvalidation validate = new inputvalidation();
+	    	InputValidation validate = new InputValidation();
 	        RequestContext context = RequestContext.getCurrentInstance();
 	        HttpServletRequest origRequest = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
 	        HttpServletResponse origResponse = (HttpServletResponse)FacesContext.getCurrentInstance().getExternalContext().getResponse();
@@ -211,7 +211,7 @@
 		    boolean connect = this.dbconnection(uname,"jdbc/login_Jdbc","java:/comp/env");
 		    
 		    /*
-	        We validate the password see "Password storage(salting stretching hashing)" in the code examples
+	        We validate the password see "Password storage(salting stretching Hashing)" in the code examples
 	        for more detailed information:
 	        */
 		   if (connect == true)
@@ -289,7 +289,7 @@
 	        
 	        FacesContext fc = FacesContext.getCurrentInstance();
 	        Logout log_out = new Logout();
-	        xpath x = new xpath();
+	        Xpath x = new Xpath();
 	                  
 	        if (log_out.isCookie_rem())
 	        {

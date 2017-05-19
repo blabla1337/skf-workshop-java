@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class inputvalidation {
+public class InputValidation {
 	
 	private AuditLog Log = new AuditLog(); 
 	public String validate = "pass"; 
@@ -24,20 +24,19 @@ public class inputvalidation {
     		 validator = "(.*)(\\W+)(\\D+)(\\s+)(.*)";
 		 }
 		 else if (type.equals("alphanummeric"))		 
-			 //validator = "^[A-Z0-9]+$";
     	 		validator = "^[a-zA-Z0-9]";
 		 else if (type.equals("nummeric"))
-			// validator = "^[0-9]*$";
+			//"^[0-9]*$";
 			 validator = "(\\d+)";
 		 else
 			 validator = "";
 
 	      // Create a Pattern object
-	      Pattern r = Pattern.compile(validator);
+	      Pattern reg = Pattern.compile(validator);
 	     // String validate = "pass" ; 
 	      // Now create matcher object.
-	      Matcher m = r.matcher(input);
-	      if (!m.find()) {	
+	      Matcher match = reg.matcher(input);
+	      if (!match.find()) {	
 	    	  
 	    	    //If there was a match this function returns "pass"
 	    	    validate = "validatation failed"; 
@@ -91,19 +90,20 @@ public class inputvalidation {
 			 validator = "(.*)(\\W+)(\\D+)(\\s+)(.*)";
     		 
 		 }
-		 else if (type.equals("alphanummeric"))		 
-			 validator = "^[A-Z0-9]+$";  		 
+		 else if (type.equals("alphanummeric"))		  
+		 validator = "^[a-zA-Z0-9]";
 		 else if (type.equals("nummeric"))
-			 validator = "^[0-9]*$";
+			//"^[0-9]*$";
+			 validator = "(\\d+)";
 		 else
 			 validator = "";
 
 	      // Create a Pattern object
-	      Pattern r = Pattern.compile(validator);
+	      Pattern reg = Pattern.compile(validator);
 	      boolean validate = false ; 
 	      // Now create matcher object.
-	      Matcher m = r.matcher(input);
-	      if (!m.find()) {	
+	      Matcher match = reg.matcher(input);
+	      if (!match.find()) {	
 	    	  
 	    	    //If there was a match this function returns false
 	    	    validate = true; 

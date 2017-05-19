@@ -20,7 +20,8 @@ import org.apache.commons.io.FilenameUtils;
 import org.primefaces.event.FileUploadEvent;
 import com.Lib.AuditLog;
 import com.Lib.WinRegistry;
-import com.Lib.inputvalidation;
+import com.Lib.InputValidation;
+
 
 @ManagedBean(name="fileUploadController")
 public class FileUploader {
@@ -28,7 +29,7 @@ public class FileUploader {
    private String destination="C:\\test";
    private final static Logger LOGGER = Logger.getLogger(FileUploader.class.getCanonicalName());
    private AuditLog Log = new AuditLog(); 
-   inputvalidation validate = new inputvalidation();
+   InputValidation validate = new InputValidation();
    private UIComponent component;
  
     public void upload(FileUploadEvent event) throws IOException, ServletException { 
