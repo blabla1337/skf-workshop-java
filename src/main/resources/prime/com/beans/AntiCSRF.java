@@ -46,11 +46,13 @@ public class AntiCSRF extends UIComponentBase {
 
     public void antiCSRF() throws IOException
     {		
-        HttpServletRequest origRequest = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
-        HttpServletResponse origResponse = (HttpServletResponse)FacesContext.getCurrentInstance().getExternalContext().getResponse();
-        String AUTH_KEY =  (String) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("AUTH_KEY");
-       	FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove(AUTH_KEY);
-   		FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+    	ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+		HttpServletRequest origRequest = (HttpServletRequest)externalContext.getRequest();
+		HttpServletResponse origResponse = (HttpServletResponse)externalContext.getResponse();
+		String AUTH_KEY =  (String) externalContext.getSessionMap().get("AUTH_KEY");
+		externalContext.getSessionMap().remove(AUTH_KEY);
+		externalContext.invalidateSession();
+		
    	    // Get an array of Cookies associated with this domain
    		Cookie[] cookies = origRequest.getCookies();		         
    		for (Cookie cookie : cookies) 
