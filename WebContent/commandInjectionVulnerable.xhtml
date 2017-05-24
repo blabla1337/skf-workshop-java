@@ -30,19 +30,15 @@
         
          <ui:insert name="content" >
            <ui:include src="commonContentCommandInjection.xhtml" />
-         </ui:insert>
-     
+         </ui:insert> 
     <h:form>      
 
      <p:growl id="msgs" showDetail="true" />
- 
-
           <p:panel header="Select a Database" style="margin-bottom:20px;">
  			<h:panelGrid columns="2" style="margin-bottom:20px" cellpadding="10" columnClasses="label, value">
-		        <p:outputLabel for="database" value="Databases:" />
-		        <p:orderList value="#{selectOneView.databases}" var="database" controlsLocation="none" />
+		        <p:outputLabel for="database" value="Database:" />
+		        <p:orderList value="#{cards.databases}" var="databases" controlsLocation="none" />
 	        </h:panelGrid>
- 
         <p:separator />
  
     <p:commandButton value="BackUp" update="display" oncomplete="PF('dlg').show()" icon="ui-icon-check" />
@@ -53,7 +49,7 @@
     </p:commandButton>
  
     <p:dialog modal="true" showEffect="fade" hideEffect="fade" widgetVar="DatabaseDialog" header="Cities" width="200">
-        <p:dataList id="displayDatabases" value="#{selectOneView.databases}" var="db">
+        <p:dataList id="displayDatabases" value="#{cards.databases}" var="db">
             <h:outputText value="#{db}" />
         </p:dataList>
     </p:dialog>

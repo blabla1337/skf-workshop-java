@@ -6,8 +6,8 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 
- 
-@ManagedBean
+
+@ManagedBean(name = "cards")
 public class SelectOneView {
      
     private String option;   
@@ -17,8 +17,8 @@ public class SelectOneView {
     public void init() {
         //Cities
     	databases = new ArrayList<String>();
-    	databases.add("San Francisco");
-        databases.add("London");
+    	databases.add("349273490561696");
+        databases.add("341822614449358");
     }
 
     public String getOption() {
@@ -29,7 +29,7 @@ public class SelectOneView {
         return databases;
     }
  
-    public void setDataabses(List<String> databases_) {
+    public void setDatabases(List<String> databases_) {
         this.databases = databases_;
     }
  

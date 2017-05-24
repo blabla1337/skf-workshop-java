@@ -13,29 +13,24 @@ import java.util.List;
 	 
 	@ManagedBean
 	@SessionScoped
-	public class DropdownView implements Serializable {
-	     
+	public class DropdownView implements Serializable {     
 	    /**
 		 * 
 		 */
 		private static final long serialVersionUID = 1L;
-		 private final static Logger LOGGER = Logger.getLogger(DropdownView.class.getCanonicalName());
-
+		private final static Logger LOGGER = Logger.getLogger(DropdownView.class.getCanonicalName());
 
 	    private DropDown selectedDatabase;
 	    private List<DropDown> databases;
 	    private String databaseid;
-	
 
 	    public DropdownView() {
 	    	databases = new ArrayList<DropDown>();
 	    	databases.add(new DropDown("login", "login"));
 	    	databases.add(new DropDown("auditlogs", "auditlogs"));
-	    	databases.add(new DropDown("aggregate_control", "aggregate_control"));
-	    	
+	    	databases.add(new DropDown("aggregate_control", "aggregate_control"));    	
 	    }
 	 
-    
 	    public DropDown getSelectedDatabases() {
 			return selectedDatabase;
 		}

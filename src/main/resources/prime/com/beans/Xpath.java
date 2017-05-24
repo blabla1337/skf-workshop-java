@@ -45,6 +45,7 @@ public class Xpath  implements Serializable {
 	
 	final static Logger logger = Logger.getLogger(Xpath.class);
 	
+	
 	public static String AUTH_KEY = "User: ";
 	
 	private String employeeID;
@@ -183,7 +184,7 @@ public class Xpath  implements Serializable {
 				    type_result = salt_expr.evaluate(document, XPathConstants.STRING).toString();  
 	    
 					} catch (Exception e) {
-		       			e.printStackTrace();
+						logger.error("XML parser error : " + e.toString() );
 		       		}  
 	        
 					
