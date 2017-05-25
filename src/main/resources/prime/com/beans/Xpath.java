@@ -235,7 +235,7 @@ public class Xpath  implements Serializable {
 	        	    login_result = login_expr.evaluate(document, XPathConstants.STRING).toString(); 
 	        	    
 				} catch (Exception e) {
-	       			e.printStackTrace();
+	       			logger.error(e.toString()); 
 	       		}  
         
 				
