@@ -1,0 +1,91 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:cu="http://localhost:8080/custom"
+    xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<f:view contentType="text/html">
+  <h:head>
+  <h:outputStylesheet name="common-style.css" library="css" />
+  </h:head>
+ 
+  <h:body>
+  	   <div id="page">    
+    <div id="header">
+      <ui:insert name="header" >
+        <ui:include src="commonHeader.xhtml" />
+      </ui:insert>
+      	<img src="resources/images/skf.png"></img>
+      </div>
+                
+      <div id="content">
+         <ui:insert name="content" >
+           <ui:include src="commonContentXPathQuery.xhtml" />
+         </ui:insert>
+
+	<h:form> 
+
+ <p:separator style="border: 0px;"></p:separator>
+ <p:spacer width="20" height="40" />
+    <h:outputLink value="javascript:void(0)" onclick="PF('dlg').show();" title="login">
+        <p:graphicImage name="/images/login64.png" />
+    </h:outputLink>
+
+    <p:growl id="growl" sticky="true" showDetail="true" life="3000" />
+ 
+    <p:dialog header="Login" widgetVar="dlg" resizable="false">
+        <h:panelGrid columns="2" id="def" cellpadding="5">
+
+            <h:outputLabel for="username" value="Username:"/>
+            <p:inputText id="username" value="#{xpath.username}" required="true" label="username" />
+
+            <h:outputLabel for="password" value="Password:"/>
+
+            <p:password id="password" value="#{xpath.password}" required="true" label="password" />
+
+            <f:facet name="footer">
+                <p:commandButton value="Login" update="growl" actionListener="#{xpath.xpathLogin}" ajax="false" oncomplete="handleLoginRequest(xhr, status, args)">
+                	<cu:antiCSRF/>             
+                </p:commandButton>
+            </f:facet>  
+        </h:panelGrid>
+
+    </p:dialog>
+    <p:spacer width="20" height="40" />
+    <p:separator style="border: 0px;"></p:separator>
+	
+    </h:form>
+
+    <p:separator style="border: 0px;"></p:separator>
+
+    <p:spacer width="20" height="40" />
+     
+    <h:form>
+	<p:commandButton action="#{navigationController.moveToMainMenu}" ajax="false" value="Main Menu" />
+	</h:form>
+ 
+<script type="text/javascript">
+    function handleLoginRequest(xhr, status, args) {
+        if(args.validationFailed || !args.loggedIn) {
+            PF('dlg').jq.effect("shake", {times:5}, 100);
+        }
+        else {
+            PF('dlg').hide();
+            $('#loginLink').fadeOut();
+        }
+    }
+</script>
+    
+    </div>
+    
+     <div id="footer">
+        <ui:insert name="footer" >
+          <ui:include src="commonFooter.xhtml" />
+        </ui:insert>
+      </div>
+        
+</div>
+  </h:body>
+  </f:view>
+</html>

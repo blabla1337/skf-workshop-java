@@ -1,0 +1,55 @@
+ <html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+     xmlns:cu="http://localhost:8080/custom"
+    xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<f:view contentType="text/html">
+  <h:head>
+    <h:outputStylesheet name="common-style.css" library="css" />
+  </h:head>   
+    <h:body>
+   <div id="page">    
+	    <div id="header">
+	      <ui:insert name="header" >
+	        <ui:include src="commonHeader.xhtml" />
+	      </ui:insert>
+	      	<img src="resources/images/skf.png"></img>
+		</div>
+        <p:separator style="border: 0px;"></p:separator>
+   </div>
+       
+      	  <div id="content">      
+	         <ui:insert name="content" >
+	           <ui:include src="commonDownloadRFD.xhtml" />
+	         </ui:insert>      
+
+		<p:dialog modal="true" widgetVar="statusDialog" header="Status" draggable="false" closable="false" resizable="false">
+		    <p:graphicImage name="/images/ajaxloadingbar.gif" />
+		</p:dialog>
+		 
+		<h:form>
+		    <p:commandButton value="Download" ajax="false" actionListener="#{fileDownloadController.filedownload}" onclick="PrimeFaces.monitorDownload(start, stop);" icon="ui-icon-arrowthick-1-s">
+		        
+		    </p:commandButton>
+		    <p:spacer width="20" height="40" />
+			<p:commandButton action="#{navigationController.moveToMainMenu}" ajax="false" value="Main Menu" />
+			
+			
+		</h:form>
+		
+		<script type="text/javascript">
+				function start() {
+				    PF('statusDialog').show();
+				}
+				 
+				function stop() {
+				    PF('statusDialog').hide();
+				}
+		</script>
+	   
+	   </div>
+</h:body>
+</f:view>
+</html>

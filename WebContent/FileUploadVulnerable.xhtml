@@ -1,0 +1,54 @@
+ <html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<f:view contentType="text/html">
+  	
+  <h:head>
+  
+  	<h:outputStylesheet name="common-style.css" library="css" />
+  </h:head>
+ 
+  <h:body>
+  	   <div id="page">    
+    <div id="header">
+      <ui:insert name="header" >
+        <ui:include src="commonHeader.xhtml" />
+      </ui:insert>
+      	<img src="resources/images/skf.png"></img>
+      </div>
+                
+      
+      <div id="content">
+         <ui:insert name="content" >
+           <ui:include src="commonContentFileUploadVulnerable.xhtml" />
+         </ui:insert>
+
+      <h:form id="form" >
+ 		
+	        <p:fileUpload id="default" update="msgTester" binding="#{fileUploadVulnerableController.component}" fileUploadListener="#{fileUploadVulnerableController.upload}"  sizeLimit="1000000" description="Select Images"/>
+			
+			<!-- allowTypes="/(\.|\/)(gif|jpe?g|png)$/" -->
+			<p:message id="msgTester" for="default" />
+			
+    </h:form>
+    
+    <h:form>
+	<p:commandButton action="#{navigationController.moveToMainMenu}" ajax="false" value="Main Menu" />
+    </h:form>
+    
+    </div>
+    
+     <div id="footer">
+        <ui:insert name="footer" >
+          <ui:include src="commonFooter.xhtml" />
+        </ui:insert>
+      </div>
+    
+    
+</div>
+  </h:body>
+  </f:view>
+</html>

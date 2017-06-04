@@ -1,0 +1,71 @@
+ <html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+     xmlns:cu="http://localhost:8080/custom"
+    xmlns:ui="http://java.sun.com/jsf/facelets">
+ 
+ <f:view contentType="text/html">
+
+  <h:head>
+    <h:outputStylesheet name="common-style.css" library="css" />
+  </h:head>
+    <h:body>
+  <div id="page">    
+    <div id="header">
+      <ui:insert name="header" >
+        <ui:include src="commonHeader.xhtml" />
+      </ui:insert>
+      	<img src="resources/images/skf.png"></img>
+</div>
+
+      <h:form>
+			  <p:commandLink id="nonAjax" actionListener="#{logout.logout}" ajax="false">
+		      	<p:graphicImage style="position:absolute; top:0; right:0; z-index: 1;" library="images" name="logout-64.png"></p:graphicImage>
+		      </p:commandLink></h:form>
+      
+      <div id="content">
+        
+         <ui:insert name="content" >
+           <ui:include src="commonContentCommandInjection.xhtml" />
+         </ui:insert>
+     
+    <h:form>      
+
+     <p:growl id="msgs" showDetail="true" />
+ 
+    <p:panel header="Select a Database" style="margin-bottom:10px;">
+        <h:panelGrid columns="2" cellpadding="5">
+            <p:outputLabel for="database" value="Database: " />
+            <p:selectOneMenu id="database" value="#{dropdownView.selectedDatabases}" converter="DatabaseConverter"> style="width:150px">
+                <f:selectItems value="#{dropdownView.databases}" var="dropDown" itemValue="#{dropDown}" itemLabel="#{dropDown.database}" />
+            </p:selectOneMenu>
+        </h:panelGrid>
+ 
+        <p:separator />
+ 
+        <p:commandButton value="BackUp" update="msgs" ajax="false" actionListener="#{dropdownView.executeCommand}" icon="ui-icon-check">
+            <!--  the antiCSRF token is placed here  -->
+
+    </p:commandButton>
+    
+    <p:commandButton action="Menu?faces-redirect=true" value="Main Menu" ajax="false">
+            <!--  the antiCSRF token is placed here  -->
+
+    </p:commandButton>
+    </p:panel>
+    
+	</h:form>
+
+      </div>
+      <div id="footer">
+        <ui:insert name="footer" >
+          <ui:include src="commonFooter.xhtml" />
+        </ui:insert>
+      </div>
+      
+    </div>
+    
+    </h:body>
+         </f:view>
+</html>

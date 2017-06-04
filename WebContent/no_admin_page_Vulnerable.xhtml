@@ -1,0 +1,75 @@
+ <html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:cu="http://localhost:8080/custom"
+    xmlns:ui="http://java.sun.com/jsf/facelets">
+ 
+ 
+ <f:view contentType="text/html">  
+ 
+	<f:event listener="#{userLogin.isAuthenticated}" type="preRenderView"/>
+ 
+  <h:head>
+  
+  
+  
+    <h:outputStylesheet name="common-style.css" library="css" />
+  </h:head>
+    <h:body>
+    
+ <h:form>
+ 
+  </h:form>
+          
+
+  <div id="page">    
+    <div id="header">
+      <ui:insert name="header" >
+        <ui:include src="commonHeader.xhtml" />
+      </ui:insert>
+      	<img src="resources/images/skf.png"></img>
+</div>
+      <h:form>
+			  <p:commandLink id="nonAjax" actionListener="#{logout.logout}" ajax="false">
+		      	<p:graphicImage style="position:absolute; top:0; right:0; z-index: 1;" library="images" name="logout-64.png"></p:graphicImage>
+		      </p:commandLink></h:form>
+ 
+      <div id="content">
+         <h:form>  
+         <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />          	
+    
+    <div class="left_side">
+    	<h:outputLabel styleClass="user_login" for="name" value="Welcome " />
+    	<h:outputText styleClass="user_login" id="name" value="#{userLogin.username}" />
+    	<p:spacer height="10" /> 
+    <p:separator style="border: 0px" />
+    	
+      </div>
+      
+    <p:spacer height="10" /> 
+    <p:separator style="border: 0px" />
+  
+     
+     
+    <p:commandButton action="passwordVulnerable?faces-redirect=true" value="Add User" ajax="false">
+    
+    </p:commandButton>
+    
+    
+    </h:form>
+    
+
+
+      </div>
+      <div id="footer">
+        <ui:insert name="footer" >
+          <ui:include src="commonFooter.xhtml" />
+        </ui:insert>
+      </div>
+      
+    </div>
+    
+    </h:body>
+</f:view>
+</html>

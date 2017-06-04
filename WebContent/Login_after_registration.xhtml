@@ -1,0 +1,89 @@
+ <html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://java.sun.com/jsf/facelets">
+ 
+ 
+ <f:view contentType="text/html">
+ 
+  <h:head>
+    <h:outputStylesheet name="common-style.css" library="css" />
+  </h:head>
+    <h:body>
+  <div id="page">    
+    <div id="header">
+      <ui:insert name="header" >
+        <ui:include src="commonHeader.xhtml" />
+      </ui:insert>
+      	<img src="resources/images/skf.png"></img>
+</div>
+      <h:form>
+			  <p:commandLink id="nonAjax" actionListener="#{logout.logout}" ajax="false">
+		      	<p:graphicImage style="position:absolute; top:0; right:0; z-index: 1;" library="images" name="logout-64.png"></p:graphicImage>
+		      </p:commandLink></h:form>
+      
+      <div id="content">
+         <ui:insert name="content" >
+           <ui:include src="commonContentSQLtruncationLogin.xhtml" />
+         </ui:insert>
+         <h:form>  
+         <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />          
+    <h:outputLink value="javascript:void(0)" onclick="PF('dlg').show();" title="login">
+        <p:graphicImage name="/images/login64.png" />
+    </h:outputLink>
+    
+
+    <p:growl id="growl" sticky="true" showDetail="true" life="3000" />
+ 
+    <p:dialog header="Login" widgetVar="dlg" resizable="false">
+        <h:panelGrid columns="2" id="def" cellpadding="5">
+
+            <h:outputLabel for="username" value="Username:"/>
+            <p:inputText id="username" value="#{userLogin.username}" required="true" label="username" />
+
+            <h:outputLabel for="password" value="Password:"/>
+
+            <p:password id="password" value="#{userLogin.password}" required="true" label="password" />
+            <f:facet name="footer">
+                <p:commandButton value="Login" update="growl" actionListener="#{userLogin.loginSQLtruncation}" oncomplete="handleLoginRequest(xhr, status, args)"/>
+            </f:facet>  
+        </h:panelGrid>
+        
+    </p:dialog>
+    
+    </h:form>
+    <p:separator style="border: 0px"></p:separator>
+    
+    <h:form>
+	<p:commandButton action="#{navigationController.moveToSQLtruncationMenu}" ajax="false" value="Menu" />
+	<p:spacer width="20" height="20" />
+	<p:commandButton action="#{navigationController.moveToMainMenu}" ajax="false" value="Main Menu" />
+	</h:form>
+ 
+<script type="text/javascript">
+    function handleLoginRequest(xhr, status, args) {
+        if(args.validationFailed || !args.loggedIn) {
+            PF('dlg').jq.effect("shake", {times:5}, 100);
+        }
+        else {
+            PF('dlg').hide();
+            $('#loginLink').fadeOut();
+        }
+    }
+</script>
+
+
+      </div>
+      <div id="footer">
+        <ui:insert name="footer" >
+          <ui:include src="commonFooter.xhtml" />
+        </ui:insert>
+      </div>
+      
+    </div>
+    
+    </h:body>
+</f:view>
+
+</html>
