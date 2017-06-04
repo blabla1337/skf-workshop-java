@@ -33,7 +33,7 @@ import com.Lib.InputValidation;
 
 @ManagedBean
 @SessionScoped
-public class Xpath  implements Serializable {
+public final class Xpath  implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	//First we include the audit log class.

@@ -37,7 +37,7 @@
     <p:panel header="Select a Database" style="margin-bottom:10px;">
         <h:panelGrid columns="2" cellpadding="5">
             <p:outputLabel for="database" value="Database: " />
-            <p:selectOneMenu id="database" value="#{dropdownView.selectedDatabases}" converter="DatabaseConverter"> style="width:150px">
+            <p:selectOneMenu id="database" value="#{dropdownView.selectedDatabases}"> style="width:150px">
                 <f:selectItems value="#{dropdownView.databases}" var="dropDown" itemValue="#{dropDown}" itemLabel="#{dropDown.database}" />
             </p:selectOneMenu>
         </h:panelGrid>

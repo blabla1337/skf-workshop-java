@@ -1,6 +1,4 @@
-     
-        
-<html xmlns="http://www.w3.org/1999/xhtml"
+ <html xmlns="http://www.w3.org/1999/xhtml"
     xmlns:h="http://java.sun.com/jsf/html"
     xmlns:f="http://java.sun.com/jsf/core"
     xmlns:p="http://primefaces.org/ui"
@@ -30,31 +28,31 @@
         
          <ui:insert name="content" >
            <ui:include src="commonContentCommandInjection.xhtml" />
-         </ui:insert> 
+         </ui:insert>
+     
     <h:form>      
 
      <p:growl id="msgs" showDetail="true" />
-          <p:panel header="Select a Database" style="margin-bottom:20px;">
- 			<h:panelGrid columns="2" style="margin-bottom:20px" cellpadding="10" columnClasses="label, value">
-		        <p:outputLabel for="database" value="Database:" />
-		        <p:orderList value="#{cards.databases}" var="databases" controlsLocation="none" />
-	        </h:panelGrid>
+ 
+    <p:panel header="Select a Database" style="margin-bottom:10px;">
+        <h:panelGrid columns="2" cellpadding="5">
+            <p:outputLabel for="database" value="Database: " />
+            <p:selectOneMenu id="database" value="#{dropdownView.selectedDatabases}" converter="DatabaseConverter"> style="width:150px">
+                <f:selectItems value="#{dropdownView.databases}" var="dropDown" itemValue="#{dropDown}" itemLabel="#{dropDown.database}" />
+            </p:selectOneMenu>
+        </h:panelGrid>
+ 
         <p:separator />
  
-    <p:commandButton value="BackUp" update="display" oncomplete="PF('dlg').show()" icon="ui-icon-check" />
-    <p:separator />
+        <p:commandButton value="BackUp" update="msgs" ajax="false" actionListener="#{dropdownView.executeCommand}" icon="ui-icon-check">
+            <!--  the antiCSRF token is placed here  -->
+
+    </p:commandButton>
+    
     <p:commandButton action="Menu?faces-redirect=true" value="Main Menu" ajax="false">
             <!--  the antiCSRF token is placed here  -->
 
     </p:commandButton>
- 
-    <p:dialog modal="true" showEffect="fade" hideEffect="fade" widgetVar="DatabaseDialog" header="Cities" width="200">
-        <p:dataList id="displayDatabases" value="#{cards.databases}" var="db">
-            <h:outputText value="#{db}" />
-        </p:dataList>
-    </p:dialog>
-    
-  
     </p:panel>
     
 	</h:form>

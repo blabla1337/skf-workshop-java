@@ -13,7 +13,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
-import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParserFactory;
 
@@ -25,12 +24,12 @@ import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 
 import com.Lib.Employee;
-import com.Lib.MyHandler;
 import com.Lib.InputValidation;
+import com.Lib.MyHandler;
 
 @ManagedBean(name="XMLDataPreview")
 @SessionScoped
-public class XMLFileUploader implements Serializable {
+public final class XMLFileUploader implements Serializable {
 	
 	private String destination="C:\\Users\\xvassilakopoulos\\Desktop\\test\\";
 	

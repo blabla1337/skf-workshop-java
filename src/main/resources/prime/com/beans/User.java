@@ -8,7 +8,7 @@ import javax.faces.event.ComponentSystemEvent;
  
 @ManagedBean(name="user")
 @SessionScoped
-public class User{
+public final class User{
 	
 	
  

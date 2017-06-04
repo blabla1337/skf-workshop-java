@@ -13,7 +13,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
 
 import org.primefaces.event.FileUploadEvent;
 
@@ -23,7 +22,7 @@ import com.Lib.InputValidation;
 @ManagedBean(name="fileUploadVulnerableController")
 	public class FileUploadVulnerable {
 		
-	   private String destination="C:\\Users\\xvassilakopoulos\\Desktop\\test\\";
+	   private String destination="C:\\Users\\xvassilakopoulos\\git\\SKF\\WebContent\\resources\\images\\";
 	   private final static Logger LOGGER = Logger.getLogger(FileUploader.class.getCanonicalName());
 	   private AuditLog Log = new AuditLog(); 
 	   InputValidation validate = new InputValidation();

@@ -8,7 +8,7 @@ import com.Lib.InputValidation;
 import com.Lib.WhiteList;
 
 
-public class DirPathTraversal {
+public final class DirPathTraversal {
 	
 	private File getFile;
 	final static Logger logger = Logger.getLogger(DirPathTraversal.class);
